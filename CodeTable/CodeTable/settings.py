@@ -130,3 +130,6 @@ CKEDITOR_CONFIGS = {
     },
 }
 
+# Setting Static Files
+
+STATIC_URL = '/static/'

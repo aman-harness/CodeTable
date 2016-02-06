@@ -1,3 +1,22 @@
-<head>Pata Nahi Kya.</head>
+<head>CodeMirror</head>
 
-<p>This is the first file. <br></p>
+{% load staticfiles %}
+<!-- <img src="{% static "CodeTable_app/XX.JPG" %}" alt="My image"/> -->
+<link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
+
+<p>Showing the text Area<br></p>
+
+<h4>Submit your code here</h4>
+<form action="/judge/submitsolution/" method="POST">{% csrf_token %}
+ <input type="hidden" value="{{problems.id}}" name="pid">
+ <input type="hidden" value="{{problems.contest_id}}" name="cid">
+ <textarea rows="25" cols="50" name="solutionBox" id="solutionBox"></textarea>
+ <br><br>
+ <select name="lid">
+ {% for l in language %}
+     <option value="{{l}}">{{l}}</option>
+ {% endfor %}
+ </select>
+ <br><br>
+ <input type="submit" class="btn btn-primary" value="Submit">
+</form>

@@ -6,7 +6,9 @@ from django.shortcuts import render
 def index(request):
     # return HttpResponse("Hello, world. You're at the polls index.")
     # Use context to pass info to page	
-    context = {}
+
+    context = {'language': ['Aman', 'Xyz', 'XYZ']}
+
     return render(request, 'CodeTable_app/index.html', context)
 
 
