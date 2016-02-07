@@ -18,11 +18,11 @@
  <form>{% csrf_token %}
      <input type="hidden" value="{{problems.id}}" name="pid">
      <input type="hidden" value="{{problems.contest_id}}" name="cid">
-     <textarea rows="25" cols="50" name="solutionBox" id="solutionBox"></textarea>
+     <textarea rows="25" cols="50" name="solutionBox" id="solutionBox">print "Hello World!"</textarea>
      <br><br>
-     <select name="lid">
-     {% for l in language %}
-         <option value="{{l}}">{{l}}</option>
+     <select name="lid" id="lid">
+     {% for key, value in language.items %}
+         <option value="{{key}}">{{value.0}}</option>
      {% endfor %}
      </select>
      <br><br>
@@ -32,6 +32,11 @@
 <p>
 
 <strong id="like_count">{{ language }}</strong> people like this category
+
+<button id="submit_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+	<span class="glyphicon glyphicon-thumbs-up"></span>
+Submit
+</button>
 
 <button id="compile_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
 	<span class="glyphicon glyphicon-thumbs-up"></span>

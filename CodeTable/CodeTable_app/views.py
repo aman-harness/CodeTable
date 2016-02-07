@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.shortcuts import render
+from . import languages
 import requests
 import json
 
@@ -12,19 +13,20 @@ def index(request):
     # return HttpResponse("Hello, world. You're at the polls index.")
     # Use context to pass info to page	
 
-    context = {'language': ['Aman', 'Xyz', 'XYZ']}
-
+    context = {'language': languages.lang}
     return render(request, 'CodeTable_app/index.html', context)
 
 
 #	 Create your views here.
 
-def saveCode(request):
-    # return HttpResponse("Hello, world. You're at the polls index.")
-    # Use context to pass info to page	
-    response_string="hello"
-    print "In the save code"
-    return HttpResponse(3)
+# def saveCode(request):
+#     # return HttpResponse("Hello, world. You're at the polls index.")
+#     # Use context to pass info to page	
+#     response_string="hello"
+#     print "In the save code"
+#     langRecv = request.GET['lang']
+#     print langRecv, '\n \n '
+#     return HttpResponse(3)
 
 def runCode(request):
 	source = request.GET['category_id']
@@ -60,10 +62,12 @@ def compileCode(request):
 
 
 def saveCode(request):
+	# print "Inside saveCode \n \n \n \n"
 	source = request.GET['category_id']
+	print 'Source :- ', source
 
-	r = requests.post(COMPILE_URL, data=data)
-	print r.json()
-	return HttpResponse(json.dumps(r.json()), content_type="application/json")
+	# r = requests.post(COMPILE_URL, data=data)
+	# print r.json()
+	return HttpResponse(3)
 
 

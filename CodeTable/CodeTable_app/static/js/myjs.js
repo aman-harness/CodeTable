@@ -42,23 +42,48 @@ $(document).ready(function(){
         // $("p").hide();
     });
 
+    //  Save the code.
     $("#save_button").click(function(){
-    	var catid;
-    	catid = document.getElementById('solutionBox').value;  
+    	var catid = document.getElementById('solutionBox').value;  
+    	var x = document.getElementById("lid").value;
     	console.log("Source Code : " + catid);
     	console.log("catid\n");
-    	$.get('/CodeTable_app/compileCode/', {category_id: catid},
+    	$.get('/CodeTable_app/saveCode/', {category_id: catid, lang : x},
     		function(text){
-    			console.log("Callback Started in compilaion");
+    			console.log("Callback Started in saving");
     			console.log(text);
 		        if(1){
 		        	JSON.stringify(text);
-		        	console.log("Happening in compilaion\n");
+		        	console.log("Happening in saving\n");
 		            $("#changed").html(text['code_id']);
 		        } else {
 		            $('body').html('Error');
 		        }
 		});
         // $("p").hide();
+    });
+
+    // This is just for the trial and debugging purpose.
+    $("#submit_button").click(function(){
+    	console.log("Inside function");
+    	var catid;
+    	catid = document.getElementById('solutionBox').value;  
+    	var x = document.getElementById("lid").value;
+    	console.log(x);
+  //   	console.log("Source Code : " + catid);
+  //   	console.log("catid\n");
+  //   	$.get('/CodeTable_app/compileCode/', {category_id: catid},
+  //   		function(text){
+  //   			console.log("Callback Started in saving");
+  //   			console.log(text);
+		//         if(1){
+		//         	JSON.stringify(text);
+		//         	console.log("Happening in saving\n");
+		//             $("#changed").html(text['code_id']);
+		//         } else {
+		//             $('body').html('Error');
+		//         }
+		// });
+  //       // $("p").hide();
     });
 });
