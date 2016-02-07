@@ -1,4 +1,38 @@
+var codeEdited = 0;
+
+
 $(document).ready(function(){
+	// var a = {{language}};
+
+	// console.log(a);
+	var myVar = document.getElementById("myVar").value;
+
+	// var obj = JSON.parse(myVar);
+	console.log(myVar);
+
+	if(codeEdited == false){
+		$(document).on('change','#lid',function(){
+		    alert("PROBANDO");
+		    $('#solutionBox').val(" {{language.c.1}} ");
+		});
+	}
+	
+
+
+	// $("#submit_button").hide();
+	// Code related to checking any change in txt area.
+	$('#solutionBox').bind('input propertychange', function() {
+		console.log("A change is Noticed.\n");
+	   	
+	   	if(codeEdited == false){
+	   		codeEdited = true;
+	   		// if(this.value.length){
+	   		//     $("#submit_button").show();
+	   		// }
+	   	}
+	   	// Send the data to server.(NOTE)
+	});
+
 
 	// Code Related to running of the code.
     $("#run_button").click(function(){

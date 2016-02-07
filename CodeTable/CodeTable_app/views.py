@@ -9,12 +9,16 @@ RUN_URL = u'https://api.hackerearth.com/v3/code/run/'
 COMPILE_URL = u'https://api.hackerearth.com/v3/code/compile/'
 CLIENT_SECRET = '9b6d81acf7b7c1d91d0dddbdbe1cb6de1c7bc7fe'
 
+
+
+
 def index(request):
     # return HttpResponse("Hello, world. You're at the polls index.")
     # Use context to pass info to page	
 
     context = {'language': languages.lang}
-    return render(request, 'CodeTable_app/index.html', context)
+    # return render(request, 'CodeTable_app/index.html', json.dumps(context))
+    return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
 
 
 #	 Create your views here.

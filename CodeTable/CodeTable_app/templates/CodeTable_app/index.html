@@ -9,25 +9,34 @@
 <link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
 
 <body></body>
-
+<script type="text/javascript">console.log()</script>
 <strong id="like_count">Aman Singh</strong>
 
 <p id = "changed">Showing the text Area<br></p>
 
+<script type="text/javascript">
+jsonList = [];
+</script>
+
+<input type="hidden" id="myVar" name="variable" value="{{ language }}">
+
+
 <h4>Submit your code here</h4>
- <form>{% csrf_token %}
-     <input type="hidden" value="{{problems.id}}" name="pid">
-     <input type="hidden" value="{{problems.contest_id}}" name="cid">
-     <textarea rows="25" cols="50" name="solutionBox" id="solutionBox">print "Hello World!"</textarea>
-     <br><br>
-     <select name="lid" id="lid">
-     {% for key, value in language.items %}
-         <option value="{{key}}">{{value.0}}</option>
-     {% endfor %}
-     </select>
-     <br><br>
-     <input type="submit" class="btn btn-primary" value="Submit">
- </form>
+<form>{% csrf_token %}
+    <input type="hidden" value="{{problems.id}}" name="pid">
+    <input type="hidden" value="{{problems.contest_id}}" name="cid">
+    <textarea rows="25" cols="50" name="solutionBox" id="solutionBox">{{language.c.1}}
+    </textarea>
+    <br><br>
+
+    <select name="lid" id="lid">
+    {% for key, value in language.items %}
+        <option value="{{key}}">{{value.0}} </option>
+    {% endfor %}
+    </select>
+    <br><br>
+    <input type="submit" class="btn btn-primary" value="Submit">
+</form>
 
 <p>
 
