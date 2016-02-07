@@ -1,22 +1,51 @@
 <head>CodeMirror</head>
 
 {% load staticfiles %}
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="{% static "js/myjs.js" %}"></script>
+
 <!-- <img src="{% static "CodeTable_app/XX.JPG" %}" alt="My image"/> -->
 <link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
 
-<p>Showing the text Area<br></p>
+<body></body>
+
+<strong id="like_count">Aman Singh</strong>
+
+<p id = "changed">Showing the text Area<br></p>
 
 <h4>Submit your code here</h4>
-<form action="/judge/submitsolution/" method="POST">{% csrf_token %}
- <input type="hidden" value="{{problems.id}}" name="pid">
- <input type="hidden" value="{{problems.contest_id}}" name="cid">
- <textarea rows="25" cols="50" name="solutionBox" id="solutionBox"></textarea>
- <br><br>
- <select name="lid">
- {% for l in language %}
-     <option value="{{l}}">{{l}}</option>
- {% endfor %}
- </select>
- <br><br>
- <input type="submit" class="btn btn-primary" value="Submit">
-</form>
+ <form>{% csrf_token %}
+     <input type="hidden" value="{{problems.id}}" name="pid">
+     <input type="hidden" value="{{problems.contest_id}}" name="cid">
+     <textarea rows="25" cols="50" name="solutionBox" id="solutionBox"></textarea>
+     <br><br>
+     <select name="lid">
+     {% for l in language %}
+         <option value="{{l}}">{{l}}</option>
+     {% endfor %}
+     </select>
+     <br><br>
+     <input type="submit" class="btn btn-primary" value="Submit">
+ </form>
+
+<p>
+
+<strong id="like_count">{{ language }}</strong> people like this category
+
+<button id="compile_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+	<span class="glyphicon glyphicon-thumbs-up"></span>
+Compile
+</button>
+
+<button id="run_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+	<span class="glyphicon glyphicon-thumbs-up"></span>
+Run
+</button>
+
+<button id="save_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
+	<span class="glyphicon glyphicon-thumbs-up"></span>
+Save
+</button>
+
+</p>
