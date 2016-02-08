@@ -14,11 +14,7 @@
 
 <p id = "changed">Showing the text Area<br></p>
 
-<script type="text/javascript">
-jsonList = [];
-</script>
-
-<input type="hidden" id="myVar" name="variable" value="{{ language }}">
+<p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
 
 <h4>Submit your code here</h4>
@@ -29,14 +25,14 @@ jsonList = [];
     </textarea>
     <br><br>
 
-    <select name="lid" id="lid">
-    {% for key, value in language.items %}
-        <option value="{{key}}">{{value.0}} </option>
-    {% endfor %}
-    </select>
+    
     <br><br>
     <input type="submit" class="btn btn-primary" value="Submit">
 </form>
+
+<select name="lid" id="lid" >
+
+</select>
 
 <p>
 

@@ -6,11 +6,11 @@ default_c = '''#include <stdio.h>
 
 int main()
 {
-    printf("Hello World!\n");
+    printf("Hello World!\\n");
     return 0;
 } '''
 
-default_cpp = ''''#include <iostream>
+default_cpp = '''#include <iostream>
 using namespace std;
 
 int main()
@@ -19,7 +19,10 @@ int main()
     return 0;
 }'''
 
+default_py = '''print "Hello World!"'''
+
 lang = {
-	'c' : ["GCC (4.8.4) ", default_c],
-	'C++' : ["G++ (4.8.4)", default_cpp]
+	'c' : 		["GCC (4.8.4) ", default_c],
+	'C++' : 	["G++ (4.8.4)", default_cpp],
+	'python' : 	["Python 2.7",  default_py]
 }

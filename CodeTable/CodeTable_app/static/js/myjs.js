@@ -2,22 +2,41 @@ var codeEdited = 0;
 
 
 $(document).ready(function(){
-	// var a = {{language}};
+	// Remove unwanted terms from srigs:
+	var convert = function(convert){
+	    return $("<span />", { html: convert }).text();
+	    //return document.createElement("span").innerText;
+	};
 
-	// console.log(a);
-	var myVar = document.getElementById("myVar").value;
+	var myVar = document.getElementById("myVar").innerHTML;
+	var obj = JSON.parse(myVar);
+	// console.log(myVar);
 
-	// var obj = JSON.parse(myVar);
-	console.log(myVar);
+	// Example to access the language object.
+	// console.log(obj["c"][0]);
 
-	if(codeEdited == false){
-		$(document).on('change','#lid',function(){
-		    alert("PROBANDO");
-		    $('#solutionBox').val(" {{language.c.1}} ");
-		});
+
+	// Populate Select language option.
+	$.each(obj, function(i, value) {
+		$('#lid').append($('<option>').text(value[0]).attr('value', i));
+	    });
+
+	// Setting default value in solutionBox.
+
+	function changeSolutionBoxText(){
+		console.log("Function Called");
+		var curr_lang = $('#lid').find('option:selected').val();
+		$('#solutionBox').val(convert(obj[curr_lang][1]));
+		return 0;
 	}
-	
 
+	changeSolutionBoxText();
+	
+	// On change of language when coding is not yest started.
+	$('#lid').change(function(){
+		if(codeEdited == 0)
+	       	changeSolutionBoxText();
+	    });
 
 	// $("#submit_button").hide();
 	// Code related to checking any change in txt area.
@@ -30,7 +49,8 @@ $(document).ready(function(){
 	   		//     $("#submit_button").show();
 	   		// }
 	   	}
-	   	// Send the data to server.(NOTE)
+
+	   	// Send the data to server for saving data.(NOTE)
 	});
 
 
