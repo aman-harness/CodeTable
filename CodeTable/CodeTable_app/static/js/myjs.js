@@ -1,10 +1,22 @@
-var codeEdited = 0;
+// src="../ace-builds/src-noconflict/ace.js" type="text/javascript">
+
 
 
 $(document).ready(function(){
+
+	// $.getScript("ce-builds/src-noconflict/ace.js", function(){
+
+	//    alert("Script loaded but not necessarily executed.");
+	//    var codeEdited = 0;
+	//    var editor = ace.edit("editor");
+	//    editor.setTheme("ace/theme/monokai");
+	//    editor.getSession().setMode("ace/mode/javascript");
+	// });
 	// Remove unwanted terms from srigs:
+
+
 	var convert = function(convert){
-	    return $("<span />", { html: convert }).text();
+	    return $("<span/>", { html: convert }).text();
 	    //return document.createElement("span").innerText;
 	};
 
@@ -30,7 +42,21 @@ $(document).ready(function(){
 		return 0;
 	}
 
+	function show_response(text){
+		console.log("Showing Responses\n");
+		$( "#logId").html("Log Id : " + text['code_id']);
+		$( "#response").show();
+		$("#res_Ctime").html(Date());
+		$("#res_time").html(text['run_status']['time_used']);
+		$("#res_memory").html(text['run_status']['memory_used']);
+		$("#res_status").html(text['run_status']['status']);
+		$("#res_statusDetail").html(text['run_status']['status_detail']);
+
+
+	}
+
 	changeSolutionBoxText();
+	$( "#response").hide();
 	
 	// On change of language when coding is not yest started.
 	$('#lid').change(function(){
@@ -38,16 +64,12 @@ $(document).ready(function(){
 	       	changeSolutionBoxText();
 	    });
 
-	// $("#submit_button").hide();
 	// Code related to checking any change in txt area.
 	$('#solutionBox').bind('input propertychange', function() {
 		console.log("A change is Noticed.\n");
 	   	
 	   	if(codeEdited == false){
 	   		codeEdited = true;
-	   		// if(this.value.length){
-	   		//     $("#submit_button").show();
-	   		// }
 	   	}
 
 	   	// Send the data to server for saving data.(NOTE)
@@ -56,23 +78,21 @@ $(document).ready(function(){
 
 	// Code Related to running of the code.
     $("#run_button").click(function(){
+    	$( "#response").hide();
     	var catid;
     	catid = document.getElementById('solutionBox').value;  
     	console.log("Source Code : " + catid);
-    	console.log("catid\n");
-    	$.get('/CodeTable_app/runCode/', {category_id: catid},
-    		function(text){
-    			console.log("Callback Started in running");
-    			console.log(text);
-		        if(1){
-		        	JSON.stringify(text);
-		        	console.log("Happening in running\n");
-		            $("#changed").html(text['code_id']);
-		        } else {
-		            $('body').html('Error');
-		        }
+    	$.get('/CodeTable_app/runCode/', {category_id: catid}, function(text){
+			show_response(text);
+			console.log("Callback Started in running");
+			JSON.stringify(text);
+			console.log(text);
+			$("#server_response").html(text['run_status']['output_html']);
+	        if(1){;
+	        } else {
+	            $('body').html('Error');
+	        }	
 		});
-        // $("p").hide();
     });
 
     // Code checking the compilaion of the code
@@ -124,20 +144,31 @@ $(document).ready(function(){
     	catid = document.getElementById('solutionBox').value;  
     	var x = document.getElementById("lid").value;
     	console.log(x);
-  //   	console.log("Source Code : " + catid);
-  //   	console.log("catid\n");
-  //   	$.get('/CodeTable_app/compileCode/', {category_id: catid},
-  //   		function(text){
-  //   			console.log("Callback Started in saving");
-  //   			console.log(text);
-		//         if(1){
-		//         	JSON.stringify(text);
-		//         	console.log("Happening in saving\n");
-		//             $("#changed").html(text['code_id']);
-		//         } else {
-		//             $('body').html('Error');
-		//         }
-		// });
-  //       // $("p").hide();
     });
+
+    function downloadFile(filename, text, lang) {
+
+    	var ext = 'py';
+
+    	var element = document.createElement('a');
+    	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
+    	element.setAttribute('download', filename + '.' + ext);
+
+    	element.style.display = 'none';
+    	document.body.appendChild(element);
+
+    	element.click();
+
+    	document.body.removeChild(element);
+    }
+
+    $("#download-code").click(function(){
+
+    	console.log("Hello World!");
+		// TODO: implement download code feature
+		// updateContent();
+		downloadFile("code", document.getElementById('solutionBox').value, '');
+
+    });
+
 });

@@ -1,9 +1,17 @@
-li a {
-    color: blue;
-}
-
 
 body {
-    /*background: white url("XX.JPG") no-repeat right bottom;*/
-    background-color: yellow;
-}
+    background-color: #F8F8F8;
+    /*margin-left: 5%;*/
+    /*margin-top: 2.5%;*/
+    /*margin-bottom: 5%;
+    margin-right: 5%
+*/}
+
+#editor { 
+     position: relative;
+     top: 0;
+     right: 0;
+     bottom: 0;
+     left: 0;
+     z-index: 5;
+ }

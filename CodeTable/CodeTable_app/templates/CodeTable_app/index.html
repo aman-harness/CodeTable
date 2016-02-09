@@ -1,61 +1,177 @@
-<head>CodeMirror</head>
+<head></head>
 
 {% load staticfiles %}
 
+
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{% static "js/myjs.js" %}"></script>
-
-<!-- <img src="{% static "CodeTable_app/XX.JPG" %}" alt="My image"/> -->
 <link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
+<script src="{% static "ace-builds/src-noconflict/ace.js" %}"></script>
 
-<body></body>
+<nav class="navbar navbar-default">
+  	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
+	    <div class="navbar-header">
+	      	<a class="navbar-brand" href="#">CodeTable</a>
+	    </div>
+    	<ul class="nav navbar-nav">
+		    <li><a href="#">Home</a></li>
+		    <li><a href="#">Page 1</a></li>
+		    <li><a href="#">Page 2</a></li>
+		    <li><a href="#">Page 3</a></li>
+    	</ul>
+  	</div>
+</nav>
+
+
+
+<body>
+ <div style="margin-left:45px; margin-right:45px;" >
 <script type="text/javascript">console.log()</script>
 <strong id="like_count">Aman Singh</strong>
-
-<p id = "changed">Showing the text Area<br></p>
 
 <p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
 
-<h4>Submit your code here</h4>
-<form>{% csrf_token %}
-    <input type="hidden" value="{{problems.id}}" name="pid">
-    <input type="hidden" value="{{problems.contest_id}}" name="cid">
-    <textarea rows="25" cols="50" name="solutionBox" id="solutionBox">{{language.c.1}}
-    </textarea>
-    <br><br>
+<h4>Submit your code here</h4>	
 
+<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a>
+
+<div style="width: 100%;">
+	<div style="float:left; width: 74%">
+		<form>{% csrf_token %}
+		    <textarea rows="22" cols="110" id="solutionBox"></textarea>
+		    <br>
+		</form>
+	</div>
+
+	<div style="float:left;">
+	<p>
+		<h3>Activity Status: </h3> <br>	<br><br>	
+		<h3>Share URL</h3><br><br><br><br><br><br><br>
+		<h3>Choose URL preference</h3><br>
+	</p>
+	</div>
+
+</div>
+<div style="clear:both"></div>
+
+<br><br><br><br>
+<p>Hello Again!</p>
+
+<!-- 111111111111111111111111111111111111111111111111111111111111111111111111111111 -->
+<!-- <div id="editor">function foo(items) {
+    var x = "All this is syntax highlighted";
+    return x;
+}</div>
     
-    <br><br>
-    <input type="submit" class="btn btn-primary" value="Submit">
-</form>
+<script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>	
+<script>
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/monokai");
+    editor.getSession().setMode("ace/mode/javascript");
+</script>
+ -->
 
-<select name="lid" id="lid" >
+<!-- 111111111111111111111111111111111111111111111111111111111111111111111111111111 -->
 
-</select>
 
-<p>
+<!-- <textarea name="description"/>
+<div id="description"/>
+<script type="text/javascript">textarea.val(editor.getSession().getValue());</script>
+ -->
 
-<strong id="like_count">{{ language }}</strong> people like this category
+<select name="lid" id="lid" ></select><br>
+
+<div style="margin-left:5px; margin-right:25px;">
+  	<h2></h2>
+  	<form role="form">
+      	<label for="comment">Comment:</label>
+      	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program..		"></textarea>
+  	</form>
+</div>
 
 <button id="submit_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span class="glyphicon glyphicon-thumbs-up"></span>
+	<span ></span>
 Submit
 </button>
 
 <button id="compile_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span class="glyphicon glyphicon-thumbs-up"></span>
+	<span ></span>
 Compile
 </button>
 
 <button id="run_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span class="glyphicon glyphicon-thumbs-up"></span>
+	<span ></span>
 Run
 </button>
 
 <button id="save_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span class="glyphicon glyphicon-thumbs-up"></span>
+	<span ></span>
 Save
 </button>
 
-</p>
+
+<div id = "response">	
+	<div id="compilation_log"></div>
+	<div id = "output">
+		<h2>Output</h2>
+		<div class="well" id = "server_response"></div>
+	</div>
+	
+	<div id = "stats">
+	
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th id = "logId">Log ID: </th>
+					<th>Time (sec)</th>
+					<th>Memory (KB)</th>
+					<th>Status</th>
+					<th>Status Detail</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+			        <td id = "res_Ctime" class="col-md-2"></td>
+			        <td id = "res_time"></td>
+			        <td id = "res_memory"></td>
+			        <td id = "res_status"></td>
+			        <td id = "res_statusDetail"></td>
+			    </tr>
+			</tbody> 
+		</table>
+
+
+	</div>
+</div>
+
+<p><br></p>
+
+</div>
+
+
+
+
+<!-- Social Footer, Single Coloured -->
+<!-- Include Font Awesome Stylesheet in Header -->
+<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+<!-- // -->
+<div class="container">
+<h3></h3>
+    <hr />
+        <div class="text-center center-block">
+            <p class="txt-railway"></p>
+           <!--  <br /> -->
+                <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-2x social"></i></a>
+	            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-2x social"></i></a>
+	            <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-2x social"></i></a>
+	            <a href="mailto:bootsnipp@gmail.com"><i class="fa fa-envelope-square fa-2x social"></i></a>
+</div>
+    <hr />
+</div>
+
+</body>

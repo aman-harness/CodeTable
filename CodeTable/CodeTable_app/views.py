@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from . import languages
 import requests
 import json
+import string
+import random
+
+# Note : Cross-check for the randomly generate string that it's not already used
 
 RUN_URL = u'https://api.hackerearth.com/v3/code/run/'
 COMPILE_URL = u'https://api.hackerearth.com/v3/code/compile/'
@@ -11,28 +15,19 @@ CLIENT_SECRET = '9b6d81acf7b7c1d91d0dddbdbe1cb6de1c7bc7fe'
 
 
 
-
 def index(request):
-    # return HttpResponse("Hello, world. You're at the polls index.")
-    # Use context to pass info to page	
+	N = 10
+	file_id = '/CodeTable_app/' + ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N)) + '/'
+	return HttpResponseRedirect(file_id)
 
-    context = {'language': languages.lang}
-    # return render(request, 'CodeTable_app/index.html', json.dumps(context))
-    return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
-
-
-#	 Create your views here.
-
-# def saveCode(request):
-#     # return HttpResponse("Hello, world. You're at the polls index.")
-#     # Use context to pass info to page	
-#     response_string="hello"
-#     print "In the save code"
-#     langRecv = request.GET['lang']
-#     print langRecv, '\n \n '
-#     return HttpResponse(3)
+def detail(request, file_id):
+	print file_id
+	context = {'language': languages.lang}
+	# return render(request, 'CodeTable_app/index.html', json.dumps(context))
+	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
 
 def runCode(request):
+	# print "function called\n\n\n\n\n\n\n\n\n"
 	source = request.GET['category_id']
 
 	data = {
@@ -43,7 +38,7 @@ def runCode(request):
 	    'time_limit': 5,
 	    'memory_limit': 262144,
 	}
-
+	print "Reached here Bench: 1"
 	r = requests.post(RUN_URL, data=data)
 	print r.json()
 	return HttpResponse(json.dumps(r.json()), content_type="application/json")
