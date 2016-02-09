@@ -46,11 +46,27 @@
 		    <textarea rows="22" cols="110" id="solutionBox"></textarea>
 		    <br>
 		</form>
+
+	<!-- 	<div id="editor" style="float:left; width: 90%">function foo(items) {
+		  var x = "All this is syntax highlighted";
+		  return x;
+		}
+		</div> -->
+<!-- 
+		<script type="text/javascript">var editor = ace.edit("editor");
+		  	editor.getSession().setMode("ace/mode/javascript");
+		  	// editor.getSession().setMode("ace/mode/c");
+		  	editor.setTheme("ace/theme/twilight");
+		 </script>
+ -->
+
 	</div>
 
-	<div style="float:left;">
+	<div style="float:left; width: 25%">
 	<p>
-		<h3>Activity Status: </h3> <br>	<br><br>	
+		<h3>Activity Status: </h3> 
+		<p id = "last_edited"></p>
+		<br>	<br><br>	
 		<h3>Share URL</h3><br><br><br><br><br><br><br>
 		<h3>Choose URL preference</h3><br>
 	</p>
@@ -62,27 +78,7 @@
 <br><br><br><br>
 <p>Hello Again!</p>
 
-<!-- 111111111111111111111111111111111111111111111111111111111111111111111111111111 -->
-<!-- <div id="editor">function foo(items) {
-    var x = "All this is syntax highlighted";
-    return x;
-}</div>
-    
-<script src="/ace-builds/src-noconflict/ace.js" type="text/javascript" charset="utf-8"></script>	
-<script>
-    var editor = ace.edit("editor");
-    editor.setTheme("ace/theme/monokai");
-    editor.getSession().setMode("ace/mode/javascript");
-</script>
- -->
 
-<!-- 111111111111111111111111111111111111111111111111111111111111111111111111111111 -->
-
-
-<!-- <textarea name="description"/>
-<div id="description"/>
-<script type="text/javascript">textarea.val(editor.getSession().getValue());</script>
- -->
 
 <select name="lid" id="lid" ></select><br>
 
@@ -156,6 +152,7 @@ Save
 
 
 
+
 <!-- Social Footer, Single Coloured -->
 <!-- Include Font Awesome Stylesheet in Header -->
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
@@ -175,3 +172,4 @@ Save
 </div>
 
 </body>
+

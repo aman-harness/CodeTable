@@ -67,6 +67,6 @@ def saveCode(request):
 
 	# r = requests.post(COMPILE_URL, data=data)
 	# print r.json()
-	return HttpResponse(3)
+	return HttpResponse()
 
 

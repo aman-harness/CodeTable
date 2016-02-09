@@ -1,18 +1,10 @@
-// src="../ace-builds/src-noconflict/ace.js" type="text/javascript">
-
-
+// {% compress js %}
+//    <script src="{% static "ace-builds/src-noconflict/ace.js" %}"></script>
+// {% endcompress %}
+var codeEdited = 0;
 
 $(document).ready(function(){
 
-	// $.getScript("ce-builds/src-noconflict/ace.js", function(){
-
-	//    alert("Script loaded but not necessarily executed.");
-	//    var codeEdited = 0;
-	//    var editor = ace.edit("editor");
-	//    editor.setTheme("ace/theme/monokai");
-	//    editor.getSession().setMode("ace/mode/javascript");
-	// });
-	// Remove unwanted terms from srigs:
 
 
 	var convert = function(convert){
@@ -22,10 +14,6 @@ $(document).ready(function(){
 
 	var myVar = document.getElementById("myVar").innerHTML;
 	var obj = JSON.parse(myVar);
-	// console.log(myVar);
-
-	// Example to access the language object.
-	// console.log(obj["c"][0]);
 
 
 	// Populate Select language option.
@@ -73,6 +61,7 @@ $(document).ready(function(){
 	   	}
 
 	   	// Send the data to server for saving data.(NOTE)
+
 	});
 
 
@@ -121,15 +110,11 @@ $(document).ready(function(){
     	var catid = document.getElementById('solutionBox').value;  
     	var x = document.getElementById("lid").value;
     	console.log("Source Code : " + catid);
-    	console.log("catid\n");
-    	$.get('/CodeTable_app/saveCode/', {category_id: catid, lang : x},
-    		function(text){
+    	$.get('/CodeTable_app/saveCode/', {category_id: catid}, function(){
     			console.log("Callback Started in saving");
-    			console.log(text);
+    			console.log("Code Saved Successfully Called\n");
 		        if(1){
-		        	JSON.stringify(text);
 		        	console.log("Happening in saving\n");
-		            $("#changed").html(text['code_id']);
 		        } else {
 		            $('body').html('Error');
 		        }
