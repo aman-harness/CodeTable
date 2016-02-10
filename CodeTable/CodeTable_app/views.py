@@ -60,8 +60,8 @@ def detail(request, file_id):
 
 	if 'key' not in request.COOKIES:
 		# CHeck Code existence
-		languages.lang['auth'] = False
-		languages.lang['code_id'] = file_id
+		languages.lang['Info']['auth'] = False
+		languages.lang['Info']['code_id'] = file_id
 		print 'Unauthorize Access'
 
 	else:
@@ -72,11 +72,11 @@ def detail(request, file_id):
 
 		# if key not in allowed_key.getlist():
 		if key in allowed_keys:
-			languages.lang['auth'] = True
+			languages.lang['Info']['auth'] = True
 			print 'Access Granted\n'
 		else:
 			print "Unauthorize access"
-			languages.lang['auth'] = False
+			languages.lang['Info']['auth'] = False
 
 	context = {'language': languages.lang}
 

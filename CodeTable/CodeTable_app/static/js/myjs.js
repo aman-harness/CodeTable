@@ -21,6 +21,8 @@ $(document).ready(function(){
 
 	// Populate Select language option.
 	$.each(json, function(i, value) {
+		if(i == "code_id") return true;
+		if(i == "Info") return true;
 		$('#lid').append($('<option>').text(value[0]).attr('value', i));
 	    });
 
