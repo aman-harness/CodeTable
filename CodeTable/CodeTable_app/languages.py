@@ -24,5 +24,7 @@ default_py = '''print "Hello World!"'''
 lang = {
 	'c' : 		["GCC (4.8.4) ", default_c],
 	'C++' : 	["G++ (4.8.4)", default_cpp],
-	'python' : 	["Python 2.7",  default_py]
+	'python' : 	["Python 2.7",  default_py],
+	'auth': 	1,
+	'code_id':	""
 }

@@ -1,45 +1,46 @@
-// {% compress js %}
-//    <script src="{% static "ace-builds/src-noconflict/ace.js" %}"></script>
-// {% endcompress %}
+
 var codeEdited = 0;
 
 $(document).ready(function(){
 
-
+	function update_lastSaved(text){
+		$('#last_saved').html("Last Saved : " + text);
+		return 0;
+	} 
 
 	var convert = function(convert){
 	    return $("<span/>", { html: convert }).text();
 	    //return document.createElement("span").innerText;
 	};
 
-	var myVar = document.getElementById("myVar").innerHTML;
-	var obj = JSON.parse(myVar);
+	var lang_str = document.getElementById("myVar").innerHTML;
+	var json = JSON.parse(lang_str);
 
+	var auth = json['auth']
+	var code_id = json['code_id']
 
 	// Populate Select language option.
-	$.each(obj, function(i, value) {
+	$.each(json, function(i, value) {
 		$('#lid').append($('<option>').text(value[0]).attr('value', i));
 	    });
 
 	// Setting default value in solutionBox.
 
 	function changeSolutionBoxText(){
-		console.log("Function Called");
 		var curr_lang = $('#lid').find('option:selected').val();
-		$('#solutionBox').val(convert(obj[curr_lang][1]));
+		$('#solutionBox').val(convert(json[curr_lang][1]));
 		return 0;
 	}
 
 	function show_response(text){
 		console.log("Showing Responses\n");
-		$( "#logId").html("Log Id : " + text['code_id']);
-		$( "#response").show();
+		$("#logId").html("Log Id : " + text['code_id']);
+		$("#response").show();
 		$("#res_Ctime").html(Date());
 		$("#res_time").html(text['run_status']['time_used']);
 		$("#res_memory").html(text['run_status']['memory_used']);
 		$("#res_status").html(text['run_status']['status']);
 		$("#res_statusDetail").html(text['run_status']['status_detail']);
-
 
 	}
 
@@ -107,14 +108,16 @@ $(document).ready(function(){
 
     //  Save the code.
     $("#save_button").click(function(){
-    	var catid = document.getElementById('solutionBox').value;  
+    	var sol_box = document.getElementById('solutionBox').value;  
     	var x = document.getElementById("lid").value;
-    	console.log("Source Code : " + catid);
-    	$.get('/CodeTable_app/saveCode/', {category_id: catid}, function(){
+    	console.log("Source Code : " + sol_box);
+    	data_passed = {code: sol_box, code_id: code_id};
+    	console.log(data_passed);
+    	$.get('/CodeTable_app/saveCode/', data_passed, function(text){
     			console.log("Callback Started in saving");
-    			console.log("Code Saved Successfully Called\n");
-		        if(1){
-		        	console.log("Happening in saving\n");
+    			console.log('Time Nonw ', text);
+    			update_lastSaved(text);
+		        if(1){;
 		        } else {
 		            $('body').html('Error');
 		        }

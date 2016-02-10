@@ -65,10 +65,27 @@
 	<div style="float:left; width: 25%">
 	<p>
 		<h3>Activity Status: </h3> 
-		<p id = "last_edited"></p>
+		<p id ="last_saved"></p>
 		<br>	<br><br>	
-		<h3>Share URL</h3><br><br><br><br><br><br><br>
-		<h3>Choose URL preference</h3><br>
+		<h3>Share URL</h3> <!-- <br><br><br><br><br><br> -->
+
+		<div class="container" style="margin-left:-15px;">
+		  	<form role="form">
+		    	<label class="checkbox-inline">
+		      		<input type="checkbox" value="">Read Only	
+		    	</label>
+		   		<label class="checkbox-inline">
+		      		<input type="checkbox" value="">Read and Write
+		    	</label>
+		  	</form>
+
+		  	<div class="container">     
+		  	  	<button type="button" class="btn btn-primary" style="background-color = green">Generate Public URL</button>
+		  	</div>	
+		</div>
+		
+		<br>
+		<p> <span style="background-color: #FFFF00">Choose URL preference </span> </p><br>
 	</p>
 	</div>
 
@@ -86,7 +103,7 @@
   	<h2></h2>
   	<form role="form">
       	<label for="comment">Comment:</label>
-      	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program..		"></textarea>
+      	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
 </div>
 
