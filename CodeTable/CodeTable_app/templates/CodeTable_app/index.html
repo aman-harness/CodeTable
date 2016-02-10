@@ -12,6 +12,15 @@
 <link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
 <script src="{% static "ace-builds/src-noconflict/ace.js" %}"></script>
 
+<script src="{% static "ace-builds/src/ace.js" %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static "ace-builds/src/ext-statusbar.js" %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static "ace-builds/src/ext-language_tools.js" %}" type="text/javascript" charset="utf-8"></script>
+
+
+
+
+
+
 <nav class="navbar navbar-default">
   	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
 	    <div class="navbar-header">
@@ -29,71 +38,57 @@
 
 
 <body>
- <div style="margin-left:45px; margin-right:45px;" >
-<script type="text/javascript">console.log()</script>
-<strong id="like_count">Aman Singh</strong>
+ 	<div style="margin-left:45px; margin-right:45px;" >
 
 <p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
 
 <h4>Submit your code here</h4>	
 
+<h3 id = "warning" allign = "center"><center>Code Is Read-Only</center></h3>
+
 <a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a>
 
 <div style="width: 100%;">
-	<div style="float:left; width: 74%">
-		<form>{% csrf_token %}
+	<div style="float:left; width: 78%">
+		<!-- <form>{% csrf_token %}
 		    <textarea rows="22" cols="110" id="solutionBox"></textarea>
 		    <br>
+		</form> -->
+		<pre id="editor" style="float:left; width: 100%"></pre>
+		<div id="editor-statusbar"></div>
+
+	</div>
+
+	<div style="float:left; width: 20%; margin-left:2%; word-wrap: break-word;">
+		<h3>Activity Status: </h3> 
+		<p id ="last_saved"></p><br><br><br>	
+		<h3>Share URL</h3>
+
+
+		<form role="form">
+	  	<label class="checkbox-inline"">
+	    		<input type="checkbox" id="ch1">Read Only	
+	  	</label>
+	 		<label class="checkbox-inline" >
+	    		<input type="checkbox" id="ch2">Read and Write
+	  	</label>
 		</form>
 
-	<!-- 	<div id="editor" style="float:left; width: 90%">function foo(items) {
-		  var x = "All this is syntax highlighted";
-		  return x;
-		}
-		</div> -->
-<!-- 
-		<script type="text/javascript">var editor = ace.edit("editor");
-		  	editor.getSession().setMode("ace/mode/javascript");
-		  	// editor.getSession().setMode("ace/mode/c");
-		  	editor.setTheme("ace/theme/twilight");
-		 </script>
- -->
-
-	</div>
-
-	<div style="float:left; width: 25%">
-	<p>
-		<h3>Activity Status: </h3> 
-		<p id ="last_saved"></p>
-		<br>	<br><br>	
-		<h3>Share URL</h3> <!-- <br><br><br><br><br><br> -->
-
-		<div class="container" style="margin-left:-15px;">
-		  	<form role="form">
-		    	<label class="checkbox-inline">
-		      		<input type="checkbox" value="">Read Only	
-		    	</label>
-		   		<label class="checkbox-inline">
-		      		<input type="checkbox" value="">Read and Write
-		    	</label>
-		  	</form>
-
-		  	<div class="container">     
-		  	  	<button type="button" class="btn btn-primary" style="background-color = green">Generate Public URL</button>
-		  	</div>	
-		</div>
-		
+		<button type="button" class="btn btn-primary" id="generate" style="margin-left:2%;">Generate Public URL</button>
 		<br>
-		<p> <span style="background-color: #FFFF00">Choose URL preference </span> </p><br>
-	</p>
-	</div>
+		<p id="p1" style="margin-left:2%;"></p><br>
+		<p id="p2" style="margin-left:2%;"></p>
+	</div> 
+</div>
 
 </div>
 <div style="clear:both"></div>
 
 <br><br><br><br>
-<p>Hello Again!</p>
+
+<!-- <pre id="editor"></pre>
+<div id="editor-statusbar"></div> -->
 
 
 

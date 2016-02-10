@@ -3,6 +3,25 @@ var codeEdited = 0;
 
 $(document).ready(function(){
 
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	var editor = ace.edit("editor");
+	editor.setTheme("ace/theme/twilight");
+	editor.session.setMode("ace/mode/c_cpp");
+	// editor.getSession().setTabSize(indentSpaces);
+	editorContent = editor.getValue();
+	editor.setFontSize(15);
+	editor.setOptions({
+			enableBasicAutocompletion: true,
+			enableSnippets: true,
+			enableLiveAutocompletion: true
+		});
+
+	var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
+	var statusBar = new StatusBar(editor, document.getElementById("editor-statusbar"));
+
+
+	$("#warning").hide();
 	function update_lastSaved(text){
 		$('#last_saved').html("Last Saved : " + text);
 		return 0;
@@ -16,14 +35,27 @@ $(document).ready(function(){
 	var lang_str = document.getElementById("myVar").innerHTML;
 	var json = JSON.parse(lang_str);
 
-	var auth = json['auth']
 	var code_id = json['code_id']
+
+	var auth = json["Info"]["auth"];
+	console.log("Auth : ",auth);
+	if(auth == false){
+		console.log("Hello!");
+		editor.setReadOnly(1);
+		$("#warning").show();
+		document.getElementById("save_button").disabled = true;
+		document.getElementById("generate").disabled = true;
+		document.getElementById("lid").disabled = true;
+	}
+
+	
 
 	// Populate Select language option.
 	$.each(json, function(i, value) {
 		if(i == "code_id") return true;
 		if(i == "Info") return true;
 		$('#lid').append($('<option>').text(value[0]).attr('value', i));
+		// console.log(value[0] , i)
 	    });
 
 	// Setting default value in solutionBox.
@@ -31,6 +63,7 @@ $(document).ready(function(){
 	function changeSolutionBoxText(){
 		var curr_lang = $('#lid').find('option:selected').val();
 		$('#solutionBox').val(convert(json[curr_lang][1]));
+		editor.setValue(convert(json[curr_lang][1]));
 		return 0;
 	}
 
@@ -58,42 +91,50 @@ $(document).ready(function(){
 	// Code related to checking any change in txt area.
 	$('#solutionBox').bind('input propertychange', function() {
 		console.log("A change is Noticed.\n");
-	   	
 	   	if(codeEdited == false){
 	   		codeEdited = true;
 	   	}
 
-	   	// Send the data to server for saving data.(NOTE)
-
 	});
+
+	editor.getSession().on('change', function() {
+	    if ($(document.activeElement).closest("div").attr("id") == "editor") {
+	        console.log("editor was changed by user typing or copy paste");
+	    } else {
+	        console.log("editor was changed programmatically");
+	    }
+	})
+
+	// editor.onTextInput(function(){
+	// 	console.log('Kuch Hua :p');
+	// })
+
+
 
 
 	// Code Related to running of the code.
     $("#run_button").click(function(){
     	$( "#response").hide();
-    	var catid;
-    	catid = document.getElementById('solutionBox').value;  
-    	console.log("Source Code : " + catid);
-    	$.get('/CodeTable_app/runCode/', {category_id: catid}, function(text){
+    	lang = $( "#lid" ).val();
+    	console.log(lang);
+    	code = editor.getValue();
+    	context = {code: code, lang: lang};
+    	console.log("Source Code : " + code);
+    	$.get('/CodeTable_app/runCode/', context, function(text){
 			show_response(text);
-			console.log("Callback Started in running");
 			JSON.stringify(text);
 			console.log(text);
-			$("#server_response").html(text['run_status']['output_html']);
-	        if(1){;
-	        } else {
-	            $('body').html('Error');
-	        }	
+			$("#server_response").html(text['run_status']['output_html']);	
 		});
     });
 
     // Code checking the compilaion of the code
     $("#compile_button").click(function(){
-    	var catid;
-    	catid = document.getElementById('solutionBox').value;  
-    	console.log("Source Code : " + catid);
-    	console.log("catid\n");
-    	$.get('/CodeTable_app/compileCode/', {category_id: catid},
+    	lang = $( "#lid" ).val();
+    	console.log(lang);
+    	code = editor.getValue();
+    	context = {code: code, lang: lang};
+    	$.get('/CodeTable_app/compileCode/', context,
     		function(text){
     			console.log("Callback Started in compilaion");
     			console.log(text);
@@ -110,8 +151,9 @@ $(document).ready(function(){
 
     //  Save the code.
     $("#save_button").click(function(){
-    	var sol_box = document.getElementById('solutionBox').value;  
-    	var x = document.getElementById("lid").value;
+    	// var sol_box = document.getElementById('solutionBox').value;  
+    	var sol_box = editor.getValue();
+    	// var x = document.getElementById("lid").value;
     	console.log("Source Code : " + sol_box);
     	data_passed = {code: sol_box, code_id: code_id};
     	console.log(data_passed);
@@ -157,8 +199,18 @@ $(document).ready(function(){
     	console.log("Hello World!");
 		// TODO: implement download code feature
 		// updateContent();
-		downloadFile("code", document.getElementById('solutionBox').value, '');
+		downloadFile("code", editor.getValue(), '');
 
+    });
+
+    $("#generate").click(function(){
+    	console.log("Hello World!");
+		if(document.getElementById('ch1').checked) {
+		    $("#p1").html("Read Only " + window.location.href );
+		}
+		if(document.getElementById('ch2').checked) {
+		    $("#p2").html("Under Construction\n" );
+		}
     });
 
 });

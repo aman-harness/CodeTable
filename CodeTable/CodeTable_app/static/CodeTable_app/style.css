@@ -3,10 +3,13 @@ body {
     background-color: #F8F8F8;
     /*margin-left: 5%;*/
     /*margin-top: 2.5%;*/
-    /*margin-bottom: 5%;
-    margin-right: 5%
-*/}
+    margin-bottom: 5%;/*
+    margin-right: 5%*/
+    /*width: 100%; text-align: center;*/
+}
 
+
+body {  }
 
 #editor { 
   margin-left: 15px;

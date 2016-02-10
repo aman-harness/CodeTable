@@ -83,13 +83,13 @@ def detail(request, file_id):
 	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
 
 def runCode(request):
-	source = request.GET['category_id']
-
+	source = request.GET['code']
+	lang = request.GET['lang']
 	data = {
 	    'client_secret': CLIENT_SECRET,
 	    'async': 0,
 	    'source': source,
-	    'lang': "PYTHON",
+	    'lang': lang,
 	    'time_limit': 5,
 	    'memory_limit': 262144,
 	}
@@ -99,13 +99,14 @@ def runCode(request):
 	return HttpResponse(json.dumps(r.json()), content_type="application/json")
 
 def compileCode(request):
-	source = request.GET['category_id']
+	source = request.GET['code']
+	lang = request.GET['lang']
 
 	data = {
 	    'client_secret': CLIENT_SECRET,
 	    'async': 0,
 	    'source': source,
-	    'lang': "PYTHON",
+	    'lang': lang,
 	    'time_limit': 5,
 	    'memory_limit': 262144,
 	}
@@ -119,7 +120,6 @@ def saveCode(request):
 	source = request.GET.get('code', '') 
 	code_id = request.GET.get('code_id', '') 
 	print 'Source :- ', source, code_id
-	allowed_key = Session.objects.filter(code_id = code_id)
 
 	code = Code.objects.get(code_id = code_id)
 	code.code_actual = source
