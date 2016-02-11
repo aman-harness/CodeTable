@@ -21,11 +21,6 @@
 
 <nav class="navbar navbar-default">
   	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
-	   <!--  <div class="navbar-header">
-	      	<a class="navbar-brand" href="#">
-	      		<img src="{% static "CodeTable_app/logo.png" %}" style = "max-width:22%; max-height:100%;">
-	      	</a>
-	    </div> -->
     	<ul class="nav navbar-nav">
 			<a href="#" class="pull-left">
 				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%; max-width:22%; max-height:100%;">
@@ -37,18 +32,35 @@
 </nav>
 
 
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
+<div style="width: 100%; margin-left:45px; margin-right:45px;">
+	<div style="float:left; width: 78%">
+
+		<h4>Start Coding :)</h4>	
+
+	</div>
+
+	<div style="float:right; width: 20%; margin-left:2%; word-wrap: break-word;">
+		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
+	</div> 
+</div>
+
+</div>
+<div style="clear:both"></div><br>
+
+
+<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+
 
 <body>
- 	<div style="margin-left:45px; margin-right:45px;" >
+<div style="margin-left:45px; margin-right:45px;" >
 
 <p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
+<h3 hidden id = "warning" allign = "center"><center>Code Is Read-Only</center></h3>
 
-<h4>Submit your code here</h4>	
 
-<h3 id = "warning" allign = "center"><center>Code Is Read-Only</center></h3>
-
-<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a>
 
 <div style="width: 100%;">
 	<div style="float:left; width: 78%">
@@ -81,24 +93,17 @@
 </div>
 
 </div>
-<div style="clear:both"></div>
+<div style="clear:both"></div><br>
 
-<br><br><br><br>
-
-<!-- <pre id="editor"></pre>
-<div id="editor-statusbar"></div> -->
-
-
-
+<div style="margin-left:5%; ">
 <select name="lid" id="lid" ></select><br>
 
-<div style="margin-left:5px; margin-right:25px;">
   	<h2></h2>
   	<form role="form">
-      	<label for="comment">Comment:</label>
+      	<label for="comment">Use custom input for testing your code</label>
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
-</div>
+
 <button id="submit_button"  class="btn btn-primary" type="button">
 Submit </button>
 <button id="compile_button"  class="btn btn-primary" type="button">Compile </button>
@@ -144,6 +149,7 @@ Submit </button>
 
 </div>
 
+</div>
 
 
 

@@ -19,11 +19,11 @@ $(document).ready(function(){
 	}
 
 	var editor = ace.edit("editor");
-	editor.setTheme("ace/theme/twilight");
+	editor.setTheme("ace/theme/chrome");
 	editor.session.setMode("ace/mode/c_cpp");
 	editor.getSession().setTabSize(indentSpaces);
 	editorContent = editor.getValue();
-	editor.setFontSize(15);
+	editor.setFontSize(13);
 	editor.setOptions({
 			enableBasicAutocompletion: true,
 			enableSnippets: true,
@@ -91,7 +91,8 @@ $(document).ready(function(){
 	    });
 
 	// Default Code to be shown In the ace Editor
-	changeSolutionBoxText();
+	if(codeEdited == false)
+		changeSolutionBoxText();
 
 	// Change Ace-editor code when language changes
 	function changeSolutionBoxText(){
