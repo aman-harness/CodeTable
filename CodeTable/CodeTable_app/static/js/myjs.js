@@ -1,9 +1,12 @@
 
 var codeEdited = 0;
-
+    function show_input(){
+    	console.log("asdf\name");
+    	$("#comment").show();
+    }
 $(document).ready(function(){
 
-// //////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 	var indentSpaces = 4;
 
@@ -251,6 +254,9 @@ $(document).ready(function(){
     	var url = (window.location.href);
     	url = url.substring(0, url.length - 1) + key;
     	console.log(url);
-    	 $("#p2").html(url);
+    	 $("#p2").html("Read and Write " + url);
     }
+
+    $("#comment").hide();
+
 });

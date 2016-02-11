@@ -31,30 +31,37 @@
   	</div>
 </nav>
 
+<!-- Code For Adding Facebook Like Button -->
+<div id="fb-root"></div>
+<script>(function(d, s, id) {
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) return;
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.5";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));</script>
 
-<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
 
-<div style="width: 100%; margin-left:45px; margin-right:45px;">
+<!-- Introducton Insformaton -->
+
+<div style="width: 95%; margin-left:45px; margin-top:-8px";>
 	<div style="float:left; width: 78%">
-
 		<h4>Start Coding :)</h4>	
 
 	</div>
 
-	<div style="float:right; width: 20%; margin-left:2%; word-wrap: break-word;">
+	<div style="float:right; width: 5%; margin-left:0%; word-wrap: break-word;">
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
 </div>
-
-</div>
 <div style="clear:both"></div><br>
+<p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 8px;"></p>
 
-
-<!-- @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ -->
+<!-- -->
 
 
 <body>
-<div style="margin-left:45px; margin-right:45px;" >
+<div style="margin-left:45px; margin-right:15px;" >
 
 <p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
@@ -63,17 +70,17 @@
 
 
 <div style="width: 100%;">
-	<div style="float:left; width: 78%">
-		<pre id="editor" style="float:left; width: 100%"></pre>
-		<div id="editor-statusbar"></div>
+	<div style="float:left; width: 75%">
+		<pre id="editor" style="float:left; width: 100%; margin-left:0%;"></pre>
+		<div id="editor-statusbar" style="margin-left:2%;"></div>
 
 	</div>
 
 	<div style="float:left; width: 20%; margin-left:2%; word-wrap: break-word;">
-		<h3>Activity Status: </h3> 
+		<h3  style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Activity Status:  </h3>
 		<p id= "run_count"></p>
 		<p id ="last_saved"></p><br><br><br>	
-		<h3>Share URL</h3>
+		<h3 style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Share URL</h3>
 
 
 		<form role="form">
@@ -100,16 +107,18 @@
 
   	<h2></h2>
   	<form role="form">
-      	<label for="comment">Use custom input for testing your code</label>
+      	<label for="comment"></label>
+      	<label class="checkbox-inline">
+	    		<input type="checkbox" id="input" onclick="show_input()">Use custom input for testing your code
+	  	</label>
+
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
 
-<button id="submit_button"  class="btn btn-primary" type="button">
-Submit </button>
+<button id="submit_button"  class="btn btn-primary" type="button"> Submit </button>
 <button id="compile_button"  class="btn btn-primary" type="button">Compile </button>
-<button id="run_button"  class="btn btn-primary" type="button">	 Run </button>
+<button id="run_button"  class="btn btn-primary" type="button">Run </button>
 <button id="save_button"  class="btn btn-primary" type="button">Save </button>
-
 
 <div id = "response">	
 	<div id="compilation_log"></div>
@@ -160,7 +169,6 @@ Submit </button>
 <!-- // -->
 <div class="container">
 <h3></h3>
-    <hr />
         <div class="text-center center-block">
             <p class="txt-railway"></p>
            <!--  <br /> -->
@@ -168,8 +176,9 @@ Submit </button>
 	            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-2x social"></i></a>
 	            <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-2x social"></i></a>
 	            <a href="mailto:bootsnipp@gmail.com"><i class="fa fa-envelope-square fa-2x social"></i></a>
-</div>
-    <hr />
+
+	            <div class="fb-like" data-href="https://www.facebook.com/HackerEarth/?fref=ts" data-width="15" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+		</div>
 </div>
 
 </body>
