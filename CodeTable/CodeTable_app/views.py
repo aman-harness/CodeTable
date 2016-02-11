@@ -57,6 +57,12 @@ def index(request):
 
 def detail(request, file_id):
 	languages.lang['code_id'] = file_id
+	code = Code.objects.get(code_id = file_id)
+	source = code.code_actual
+	last_change = str(code.last_edited)
+	ret = [source, last_change]
+
+	print "Deatil", source, last_change
 
 	if 'key' not in request.COOKIES:
 		# CHeck Code existence
@@ -78,6 +84,8 @@ def detail(request, file_id):
 			print "Unauthorize access"
 			languages.lang['Info']['auth'] = False
 
+	languages.lang['Info']['extra'] = ret
+	print "C, ", languages.lang['Info']['extra']
 	context = {'language': languages.lang}
 
 	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
@@ -85,6 +93,8 @@ def detail(request, file_id):
 def runCode(request):
 	source = request.GET['code']
 	lang = request.GET['lang']
+	inputt = request.GET['input']
+	print "Input:--------------- ", inputt
 	data = {
 	    'client_secret': CLIENT_SECRET,
 	    'async': 0,
@@ -92,6 +102,7 @@ def runCode(request):
 	    'lang': lang,
 	    'time_limit': 5,
 	    'memory_limit': 262144,
+	    'input' : inputt,
 	}
 	print "Reached here Bench: 1"
 	r = requests.post(RUN_URL, data=data)

@@ -29,13 +29,21 @@ $(document).ready(function(){
 
 	var convert = function(convert){
 	    return $("<span/>", { html: convert }).text();
-	    //return document.createElement("span").innerText;
 	};
 
 	var lang_str = document.getElementById("myVar").innerHTML;
 	var json = JSON.parse(lang_str);
 
 	var code_id = json['code_id']
+
+	var code = convert(json['Info']['extra'][0])
+	var time = json['Info']['extra'][1]
+
+	if(code != ""){
+		update_lastSaved(time);
+		editor.setValue(convert(code));
+		codeEdited = true;
+	}
 
 	var auth = json["Info"]["auth"];
 	console.log("Auth : ",auth);
@@ -62,7 +70,7 @@ $(document).ready(function(){
 
 	function changeSolutionBoxText(){
 		var curr_lang = $('#lid').find('option:selected').val();
-		$('#solutionBox').val(convert(json[curr_lang][1]));
+		// $('#solutionBox').val(convert(json[curr_lang][1]));Z
 		editor.setValue(convert(json[curr_lang][1]));
 		return 0;
 	}
@@ -79,13 +87,12 @@ $(document).ready(function(){
 
 	}
 
-	changeSolutionBoxText();
+	// if (codeEdited == true) changeSolutionBoxText();
 	$( "#response").hide();
 	
 	// On change of language when coding is not yest started.
 	$('#lid').change(function(){
-		if(codeEdited == 0)
-	       	changeSolutionBoxText();
+		if(codeEdited == false) changeSolutionBoxText();
 	    });
 
 	// Code related to checking any change in txt area.
@@ -105,20 +112,18 @@ $(document).ready(function(){
 	    }
 	})
 
-	// editor.onTextInput(function(){
-	// 	console.log('Kuch Hua :p');
-	// })
-
 
 
 
 	// Code Related to running of the code.
     $("#run_button").click(function(){
     	$( "#response").hide();
-    	lang = $( "#lid" ).val();
+    	lang = $("#lid").val();
+    	input = document.getElementById("comment").value;
     	console.log(lang);
     	code = editor.getValue();
-    	context = {code: code, lang: lang};
+    	console.log("Input: "+ input);
+    	context = {code: code, lang: lang, input: input};
     	console.log("Source Code : " + code);
     	$.get('/CodeTable_app/runCode/', context, function(text){
 			show_response(text);
@@ -130,6 +135,7 @@ $(document).ready(function(){
 
     // Code checking the compilaion of the code
     $("#compile_button").click(function(){
+    	$( "#response").hide();
     	lang = $( "#lid" ).val();
     	console.log(lang);
     	code = editor.getValue();
@@ -171,11 +177,9 @@ $(document).ready(function(){
 
     // This is just for the trial and debugging purpose.
     $("#submit_button").click(function(){
-    	console.log("Inside function");
+    	input = document.getElementById("comment").value;
+    	console.log("Inside function " + input);
     	var catid;
-    	catid = document.getElementById('solutionBox').value;  
-    	var x = document.getElementById("lid").value;
-    	console.log(x);
     });
 
     function downloadFile(filename, text, lang) {

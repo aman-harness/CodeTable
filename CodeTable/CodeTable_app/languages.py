@@ -21,6 +21,7 @@ int main()
 
 default_py = """print "Hello World!"""
 
+extra_data = []
 lang = {
 	"C" :			["C", default_c],
 	"CPP" :			["CPP", default_cpp],
@@ -38,5 +39,5 @@ lang = {
 	"RUBY" :		["Ruby (ruby 2.1.1)","X"],
 	"RUST" :		["Rust (rustc 1.4.0)","X"],
 	"SCALA" :		["Scala (scalac 2.9.1)","X"],
-	"Info" :		{"auth": 1, "code_id":	"XXXXX"}
+	"Info" :		{"auth": 1, "code_id":	"XXXXX","extra":extra_data }
 }
