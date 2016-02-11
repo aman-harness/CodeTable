@@ -1,6 +1,7 @@
 <head></head>
 
 {% load staticfiles %}
+{% load static %}
 
 
 <meta charset="utf-8">
@@ -18,19 +19,19 @@
 
 
 
-
-
-
 <nav class="navbar navbar-default">
   	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
-	    <div class="navbar-header">
-	      	<a class="navbar-brand" href="#">CodeTable</a>
-	    </div>
+	   <!--  <div class="navbar-header">
+	      	<a class="navbar-brand" href="#">
+	      		<img src="{% static "CodeTable_app/logo.png" %}" style = "max-width:22%; max-height:100%;">
+	      	</a>
+	    </div> -->
     	<ul class="nav navbar-nav">
+			<a href="#" class="pull-left">
+				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%; max-width:22%; max-height:100%;">
+			</a>
 		    <li><a href="#">Home</a></li>
 		    <li><a href="#">Page 1</a></li>
-		    <li><a href="#">Page 2</a></li>
-		    <li><a href="#">Page 3</a></li>
     	</ul>
   	</div>
 </nav>
@@ -51,10 +52,6 @@
 
 <div style="width: 100%;">
 	<div style="float:left; width: 78%">
-		<!-- <form>{% csrf_token %}
-		    <textarea rows="22" cols="110" id="solutionBox"></textarea>
-		    <br>
-		</form> -->
 		<pre id="editor" style="float:left; width: 100%"></pre>
 		<div id="editor-statusbar"></div>
 
@@ -62,12 +59,13 @@
 
 	<div style="float:left; width: 20%; margin-left:2%; word-wrap: break-word;">
 		<h3>Activity Status: </h3> 
+		<p id= "run_count"></p>
 		<p id ="last_saved"></p><br><br><br>	
 		<h3>Share URL</h3>
 
 
 		<form role="form">
-	  	<label class="checkbox-inline"">
+	  	<label class="checkbox-inline">
 	    		<input type="checkbox" id="ch1">Read Only	
 	  	</label>
 	 		<label class="checkbox-inline" >
@@ -101,26 +99,11 @@
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
 </div>
-
-<button id="submit_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span ></span>
-Submit
-</button>
-
-<button id="compile_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span ></span>
-Compile
-</button>
-
-<button id="run_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span ></span>
-Run
-</button>
-
-<button id="save_button" data-catid="{{category.id}}" class="btn btn-primary" type="button">
-	<span ></span>
-Save
-</button>
+<button id="submit_button"  class="btn btn-primary" type="button">
+Submit </button>
+<button id="compile_button"  class="btn btn-primary" type="button">Compile </button>
+<button id="run_button"  class="btn btn-primary" type="button">	 Run </button>
+<button id="save_button"  class="btn btn-primary" type="button">Save </button>
 
 
 <div id = "response">	

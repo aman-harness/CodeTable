@@ -5,10 +5,23 @@ $(document).ready(function(){
 
 // //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+	var indentSpaces = 4;
+
+	function readCookie(name) {
+	    var nameEQ = name + "=";
+	    var ca = document.cookie.split(';');
+	    for(var i=0;i < ca.length;i++) {
+	        var c = ca[i];
+	        while (c.charAt(0)==' ') c = c.substring(1,c.length);
+	        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
+	    }
+	    return null;
+	}
+
 	var editor = ace.edit("editor");
 	editor.setTheme("ace/theme/twilight");
 	editor.session.setMode("ace/mode/c_cpp");
-	// editor.getSession().setTabSize(indentSpaces);
+	editor.getSession().setTabSize(indentSpaces);
 	editorContent = editor.getValue();
 	editor.setFontSize(15);
 	editor.setOptions({
@@ -38,7 +51,18 @@ $(document).ready(function(){
 
 	var code = convert(json['Info']['extra'][0])
 	var time = json['Info']['extra'][1]
+	var run_count = json['Info']['extra'][2]
+	console.log("Code Codunt -" + run_count);
 
+	function update_runCount(){
+		$('#run_count').html("Run Count : " + run_count);
+	}
+	// Show Run_Count by getting it from the dtaabase.
+	update_runCount();
+	// Default Code to be shown In the ace Editor
+	// changeSolutionBoxText();
+
+	// If some code comes from database.
 	if(code != ""){
 		update_lastSaved(time);
 		editor.setValue(convert(code));
@@ -66,8 +90,10 @@ $(document).ready(function(){
 		// console.log(value[0] , i)
 	    });
 
-	// Setting default value in solutionBox.
+	// Default Code to be shown In the ace Editor
+	changeSolutionBoxText();
 
+	// Change Ace-editor code when language changes
 	function changeSolutionBoxText(){
 		var curr_lang = $('#lid').find('option:selected').val();
 		// $('#solutionBox').val(convert(json[curr_lang][1]));Z
@@ -123,9 +149,10 @@ $(document).ready(function(){
     	console.log(lang);
     	code = editor.getValue();
     	console.log("Input: "+ input);
-    	context = {code: code, lang: lang, input: input};
-    	console.log("Source Code : " + code);
+    	context = {code: code, lang: lang, input: input, code_id: code_id};
     	$.get('/CodeTable_app/runCode/', context, function(text){
+			run_count = run_count + 1;
+			update_runCount();
 			show_response(text);
 			JSON.stringify(text);
 			console.log(text);
@@ -213,8 +240,16 @@ $(document).ready(function(){
 		    $("#p1").html("Read Only " + window.location.href );
 		}
 		if(document.getElementById('ch2').checked) {
-		    $("#p2").html("Under Construction\n" );
+			generate_rwurl();
+		   
 		}
     });
 
+    function generate_rwurl(){
+    	var key = readCookie('key');
+    	var url = (window.location.href);
+    	url = url.substring(0, url.length - 1) + key;
+    	console.log(url);
+    	 $("#p2").html(url);
+    }
 });

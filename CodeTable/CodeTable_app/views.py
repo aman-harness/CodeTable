@@ -26,7 +26,7 @@ def index(request):
 	file_url = '/CodeTable_app/' + file_name + '/'
 	signer = Signer()
 	value = signer.sign(file_name)
-	print 'Result : ',value, file_name
+	print 'Result : ', value, file_name
 
 	response = HttpResponseRedirect(file_url)
 
@@ -48,10 +48,6 @@ def index(request):
 	session.setlist(allowed_key)
 	session.save()
 
-	# X = Session.objects.get(code_id = file_name)
-	# Y = json.loads(X.allowed_list)
-	# Y.append('Aman')
-	# print 'Allowed Key: ', Y
 	return response
 
 
@@ -60,7 +56,8 @@ def detail(request, file_id):
 	code = Code.objects.get(code_id = file_id)
 	source = code.code_actual
 	last_change = str(code.last_edited)
-	ret = [source, last_change]
+	run_count = code.run_count
+	ret = [source, last_change, run_count]
 
 	print "Deatil", source, last_change
 
@@ -90,11 +87,56 @@ def detail(request, file_id):
 
 	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
 
+def auth(request, auth_id):
+	code_id = auth_id[0:10]
+	key = auth_id[10:]
+	print code_id, auth_id
+	r_url = '/CodeTable_app/' + code_id + '/'
+
+	response = HttpResponseRedirect(r_url)
+
+	session = Session.objects.get(code_id = code_id)
+	allowed_keys = json.loads(session.allowed_list)
+	print "X - ", allowed_keys, key
+
+	# 	# if key not in allowed_key.getlist():
+	if key in allowed_keys:
+		# .. To append that List. With Originial key
+		# Redirect.
+		# s_key = request.COOKIES['key']
+
+		if 'key' in request.COOKIES:
+			s_key = request.COOKIES.get('key')
+			print 'yay'
+
+		else:
+			s_key =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
+			response.set_cookie('key', key)
+			print 'no'
+
+		if s_key not in allowed_keys:
+			allowed_keys.append(s_key)
+			session.setlist(allowed_keys)
+			session.save()	
+	else:
+		print "Unauthorize access"
+		languages.lang['Info']['auth'] = False
+
+	# languages.lang['Info']['extra'] = ret
+	# print "C, ", languages.lang['Info']['extra']
+	# context = {'language': languages.lang}
+
+	return response
+
 def runCode(request):
 	source = request.GET['code']
 	lang = request.GET['lang']
 	inputt = request.GET['input']
-	print "Input:--------------- ", inputt
+	code_id = request.GET['code_id']
+
+	code = Code.objects.get(code_id = code_id)
+	code.run_count = code.run_count + 1
+	code.save()
 	data = {
 	    'client_secret': CLIENT_SECRET,
 	    'async': 0,
@@ -104,7 +146,6 @@ def runCode(request):
 	    'memory_limit': 262144,
 	    'input' : inputt,
 	}
-	print "Reached here Bench: 1"
 	r = requests.post(RUN_URL, data=data)
 	print r.json()
 	return HttpResponse(json.dumps(r.json()), content_type="application/json")

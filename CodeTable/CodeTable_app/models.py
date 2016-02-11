@@ -9,8 +9,9 @@ class Code(models.Model):
 	code_id = models.CharField(max_length=11, primary_key=True, unique=True)
 	last_edited = models.DateTimeField()
 	code_actual = models.CharField(max_length = 50000)
-	def __unicode__(self):
-		return self.code_id
+	run_count = models.IntegerField(default = 0)
+	# def __unicode__(self):
+	# 	return self.code_id
 
 class Session(models.Model):
 	code_id = models.CharField(max_length = 11)
