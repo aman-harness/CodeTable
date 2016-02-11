@@ -4,6 +4,23 @@ var codeEdited = 0;
     	console.log("asdf\name");
     	$("#comment").show();
     }
+
+function exchange(id){
+    var frmObj= document.getElementById(id);
+    var toObj= document.getElementById(id+'b');
+    var b1 = document.getElementById('b1');
+    toObj.style.width = frmObj.offsetWidth+7+'px'
+    frmObj.style.display = 'none';
+    toObj.style.display =' inline';
+    // toObj.value=frmObj.innerHTML
+    $('#itmb1').show();
+    $('#b1').show();
+	$('#lbl').show();
+    $('#email').show();
+    }
+
+
+
 $(document).ready(function(){
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -55,7 +72,13 @@ $(document).ready(function(){
 	var code = convert(json['Info']['extra'][0])
 	var time = json['Info']['extra'][1]
 	var run_count = json['Info']['extra'][2]
+	var user_name = json['Info']['extra'][3]
 	console.log("Code Codunt -" + run_count);
+
+	if(user_name == ""){
+		$("#itm1").html("Unitled Name");
+	}
+	else $("#itm1").html(user_name);
 
 	function update_runCount(){
 		$('#run_count').html("Run Count : " + run_count);
@@ -249,6 +272,24 @@ $(document).ready(function(){
 		}
     });
 
+    $("#b1").click(function(){
+    	$("#b1").hide();
+    	$("#itm1b").hide();
+    	var req = $("#itm1b").val();
+    	$("#itm1").html(req);
+    	$("#itm1").show();
+    	data_passed = {code_id: code_id , name: req};
+    	$.get('/CodeTable_app/update_name/', data_passed, function(){
+			console.log("Callback Started in chnaging name");
+			// update_lastSaved(text);
+	        if(1){;
+	        } else {
+	            $('body').html('Error');
+	        }
+		});
+
+    });
+
     function generate_rwurl(){
     	var key = readCookie('key');
     	var url = (window.location.href);
@@ -258,5 +299,10 @@ $(document).ready(function(){
     }
 
     $("#comment").hide();
+    $('#itmb1').hide();
+
+    $('#b1').hide();
+    $('#lbl').hide();
+    $('#email').hide();
 
 });

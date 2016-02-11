@@ -9,6 +9,10 @@ body {
     /*background: white url("images/logo.png") no-repeat right bottom;*/
 }
 
+.replace {
+display:none;
+;
+}
 
 #editor { 
   margin-left: 15px;

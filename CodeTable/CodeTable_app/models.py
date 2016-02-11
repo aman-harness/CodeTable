@@ -10,6 +10,7 @@ class Code(models.Model):
 	last_edited = models.DateTimeField()
 	code_actual = models.CharField(max_length = 50000)
 	run_count = models.IntegerField(default = 0)
+	user_name = models.CharField(max_length=11, default = "")
 	# def __unicode__(self):
 	# 	return self.code_id
 

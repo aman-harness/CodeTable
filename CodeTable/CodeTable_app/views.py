@@ -57,7 +57,8 @@ def detail(request, file_id):
 	source = code.code_actual
 	last_change = str(code.last_edited)
 	run_count = code.run_count
-	ret = [source, last_change, run_count]
+	user_name = code.user_name
+	ret = [source, last_change, run_count, user_name]
 
 	print "Deatil", source, last_change
 
@@ -178,6 +179,15 @@ def saveCode(request):
 	code.last_edited = datetime.now()
 	code.save()
 	return HttpResponse(datetime.now())
+
+def update_name(request):
+	code_id = request.GET.get('code_id', '') 
+	user_name = request.GET.get('name', '')
+	print "Hello World \n", user_name
+	code = Code.objects.get(code_id = code_id)
+	code.user_name = user_name
+	code.save()
+	return HttpResponse()
 
 
 
