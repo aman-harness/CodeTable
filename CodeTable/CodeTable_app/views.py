@@ -44,7 +44,6 @@ def index(request):
 
 	allowed_key = [key]
 	session = Session(code_id = file_name)
-	# print b.setlist(allowed_key), json.dumps(allowed_key), b.allowed_list, str(allowed_key)
 	session.setlist(allowed_key)
 	session.save()
 
@@ -60,6 +59,7 @@ def clone(request):
 	code = Code()
 	code.code_actual = source
 	code.code_id = file_name
+	code.clone_count = code.clone_count + 1
 	code.save()
 
 	#Updating Session Db
@@ -77,7 +77,8 @@ def detail(request, file_id):
 	last_change = str(code.last_edited)
 	run_count = code.run_count
 	user_name = code.user_name
-	ret = [source, last_change, run_count, user_name]
+	clone_count = code.clone_count
+	ret = [source, last_change, run_count, user_name, clone_count]
 
 	print "Deatil", source, last_change
 

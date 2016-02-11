@@ -17,6 +17,7 @@ function exchange(id){
     $('#b1').show();
 	$('#lbl').show();
     $('#email').show();
+    document.getElementById("itm1b").focus();
     }
 
 
@@ -73,6 +74,7 @@ $(document).ready(function(){
 	var time = json['Info']['extra'][1]
 	var run_count = json['Info']['extra'][2]
 	var user_name = json['Info']['extra'][3]
+	var clone_count = json['Info']['extra'][4]
 	console.log("Code Count -" + run_count);
 
 	if(user_name == ""){
@@ -80,11 +82,16 @@ $(document).ready(function(){
 	}
 	else $("#itm1").html(user_name);
 
+	function show_forkcount(){
+		$("#fork_text").val(' ' +clone_count);
+	}
+
 	function show_runcount(){
 		$('#run_count').html("Run Count : " + run_count);
 	}
 	// Show Run_Count by getting it from the dtaabase.
 	show_runcount();
+	show_forkcount();
 	// Default Code to be shown In the ace Editor
 	// changeSolutionBoxText();
 
@@ -302,6 +309,8 @@ $(document).ready(function(){
 			new_url = new_url.slice(0, -11);
 			new_url = new_url + url;
 			console.log(new_url);
+			clone_count = clone_count + 1;
+			show_forkcount();
 			window.open(new_url);
 	        if(1){;
 	        } else {
