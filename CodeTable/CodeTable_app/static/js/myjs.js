@@ -69,28 +69,29 @@ $(document).ready(function(){
 
 	var code_id = json['code_id']
 
-	var code = convert(json['Info']['extra'][0])
+	var code = (json['Info']['extra'][0])
 	var time = json['Info']['extra'][1]
 	var run_count = json['Info']['extra'][2]
 	var user_name = json['Info']['extra'][3]
-	console.log("Code Codunt -" + run_count);
+	console.log("Code Count -" + run_count);
 
 	if(user_name == ""){
 		$("#itm1").html("Unitled Name");
 	}
 	else $("#itm1").html(user_name);
 
-	function update_runCount(){
+	function show_runcount(){
 		$('#run_count').html("Run Count : " + run_count);
 	}
 	// Show Run_Count by getting it from the dtaabase.
-	update_runCount();
+	show_runcount();
 	// Default Code to be shown In the ace Editor
 	// changeSolutionBoxText();
 
 	// If some code comes from database.
 	if(code != ""){
 		update_lastSaved(time);
+		console.log(code);
 		editor.setValue(convert(code));
 		codeEdited = true;
 	}
@@ -123,7 +124,6 @@ $(document).ready(function(){
 	// Change Ace-editor code when language changes
 	function changeSolutionBoxText(){
 		var curr_lang = $('#lid').find('option:selected').val();
-		// $('#solutionBox').val(convert(json[curr_lang][1]));Z
 		editor.setValue(convert(json[curr_lang][1]));
 		return 0;
 	}
@@ -179,7 +179,7 @@ $(document).ready(function(){
     	context = {code: code, lang: lang, input: input, code_id: code_id};
     	$.get('/CodeTable_app/runCode/', context, function(text){
 			run_count = run_count + 1;
-			update_runCount();
+			show_runcount();
 			show_response(text);
 			JSON.stringify(text);
 			console.log(text);
@@ -288,6 +288,26 @@ $(document).ready(function(){
 	        }
 		});
 
+    });
+
+    $("#fork").click(function(){
+    	var sol_box = editor.getValue();
+    	// var x = document.getElementById("lid").value;
+    	console.log("Source Code : " + sol_box);
+    	data_passed = {code: sol_box, code_id: code_id};
+    	$.get('/CodeTable_app/clone/', data_passed, function(url){
+			console.log("Callback Started in chnaging name");
+			console.log(url);
+			var new_url = window.location.href;
+			new_url = new_url.slice(0, -11);
+			new_url = new_url + url;
+			console.log(new_url);
+			window.open(new_url);
+	        if(1){;
+	        } else {
+	            $('body').html('Error');
+	        }
+		});
     });
 
     function generate_rwurl(){

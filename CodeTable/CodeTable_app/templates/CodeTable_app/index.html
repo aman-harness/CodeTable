@@ -25,9 +25,13 @@
 			<a href="#" class="pull-left">
 				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%; max-width:22%; max-height:100%;">
 			</a>
-		    <li><a href="#">Home</a></li>
-		    <li><a href="#">Page 1</a></li>
     	</ul>
+
+    	<ul class="nav navbar-nav navbar-right" style = "margin-right: 100px;">
+    	   <li><a href="#" align="right">Home</a></li>
+    	   <li><a href="#" align="right">API</a></li>
+    	 </ul>
+
   	</div>
 </nav>
 
@@ -49,7 +53,7 @@
 		<h4>Start Coding :)</h4>	
 
 		
-		<span id="itm1" onclick="exchange(this.id)" style = "margin-left: -17%;">Untitled Code</span>
+		<span id="itm1" onclick="exchange(this.id)" style = "margin-left: -17%;"></span>
 		<span class="col-xs-2">
 		    <!-- <label for="ex1"></label> -->
 		<input class="replace" id="itm1b" type="text" style = "margin-left: -14%;">
@@ -60,9 +64,17 @@
 
 	</div>
 
+	<div class="wrapper" style="margin-left:5%;">
+		<button id = "fork">FORK CODE!</button>
+	    <input type="text" disabled placeholder = "Aman" size="3"> 
+	</div>
+ 
 	<div style="float:right; width: 5%; margin-left:0%; word-wrap: break-word;">
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
+
+	
+
 </div>
 <div style="clear:both"></div><br>
 <p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 8px;"></p>
@@ -192,4 +204,6 @@
 </div>
 
 </body>
+
+<script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 

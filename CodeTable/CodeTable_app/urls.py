@@ -10,4 +10,5 @@ urlpatterns = [
     url(r'^saveCode/', views.saveCode, name='saveCode'),
     url(r'^compileCode/', views.compileCode, name='compileCode'), 
     url(r'^update_name/', views.update_name, name='update_name'),     
+    url(r'^clone/', views.clone, name='clone'),     
 ]

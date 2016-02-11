@@ -20,3 +20,29 @@ display:none;
   width: 1000px;
   height: 400px;
 }
+
+.wrapper {
+    border:1px solid #E5E7E8;
+    display:inline-block;
+    border-style: solid;
+    border-radius: 25px;
+    /*overflow:hidden;*/
+}
+
+button {
+    background-color:#E5E7E8;
+    border:0;
+    border-style: solid;
+}
+
+input
+{	
+	/*border-radius: 25px;*/
+    background-color:transparent;
+    border:0;
+    border-style: solid;
+}'
+
+/*#fork{
+    
+}'*/

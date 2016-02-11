@@ -50,6 +50,25 @@ def index(request):
 
 	return response
 
+def clone(request):
+	key = request.COOKIES.get('key')
+	source = request.GET['code']
+	print source
+	file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
+	
+	#Updating Code db
+	code = Code()
+	code.code_actual = source
+	code.code_id = file_name
+	code.save()
+
+	#Updating Session Db
+	session = Session(code_id = file_name)
+	allowed_key = [key]
+	session.setlist(allowed_key)
+	session.save()
+	file_url = '/CodeTable_app/' + file_name + '/'
+	return HttpResponse(file_name)
 
 def detail(request, file_id):
 	languages.lang['code_id'] = file_id

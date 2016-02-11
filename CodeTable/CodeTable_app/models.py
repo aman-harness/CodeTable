@@ -7,7 +7,7 @@ import json
 
 class Code(models.Model):
 	code_id = models.CharField(max_length=11, primary_key=True, unique=True)
-	last_edited = models.DateTimeField()
+	last_edited = models.DateTimeField(null=True)
 	code_actual = models.CharField(max_length = 50000)
 	run_count = models.IntegerField(default = 0)
 	user_name = models.CharField(max_length=11, default = "")
