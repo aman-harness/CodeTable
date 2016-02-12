@@ -114,7 +114,6 @@ $(document).ready(function(){
 		document.getElementById("lid").disabled = true;
 	}
 
-	
 
 	// Populate Select language option.
 	$.each(json, function(i, value) {
@@ -136,14 +135,30 @@ $(document).ready(function(){
 	}
 
 	function show_response(text){
-		console.log("Showing Responses\n");
-		$("#logId").html("Log Id : " + text['code_id']);
-		$("#response").show();
-		$("#res_Ctime").html(Date());
-		$("#res_time").html(text['run_status']['time_used']);
-		$("#res_memory").html(text['run_status']['memory_used']);
-		$("#res_status").html(text['run_status']['status']);
-		$("#res_statusDetail").html(text['run_status']['status_detail']);
+
+		if(text['run_status']['status'] == "AC"){
+			$("#server_response").html(text['run_status']['output_html']);
+			console.log("Showing Responses\n");
+			$("#logId").html("Log Id : " + text['code_id']);
+			$("#response").show();
+			$("#res_Ctime").html(Date());
+			$("#res_time").html(text['run_status']['time_used']);
+			$("#res_memory").html(text['run_status']['memory_used']);
+			$("#res_status").html(text['run_status']['status']);
+			$("#res_statusDetail").html(text['run_status']['status_detail']);
+		}
+		else{
+			console.log(text['compile_status']);
+			$("#server_response").html(text['compile_status']);
+			console.log("Showing Responses\n");
+			$("#logId").html("Log Id : " + text['code_id']);
+			$("#response").show();
+			$("#res_Ctime").html(Date());
+			$("#res_time").html("--");
+			$("#res_memory").html("--");
+			$("#res_status").html(text['run_status']['status']);
+			$("#res_statusDetail").html(text['run_status']['status_detail']);
+		}
 
 	}
 
@@ -190,7 +205,7 @@ $(document).ready(function(){
 			show_response(text);
 			JSON.stringify(text);
 			console.log(text);
-			$("#server_response").html(text['run_status']['output_html']);	
+			
 		});
     });
 
@@ -318,6 +333,21 @@ $(document).ready(function(){
 	        }
 		});
     });
+
+	$("#delete").click(function(){
+		data_passed = {code_id: code_id};
+		$.get('/CodeTable_app/delete/', data_passed, function(){
+			console.log("Callback Started in delete name");
+			var new_url = window.location.href;
+			new_url = new_url.slice(0, -11);
+			// window.open(new_url);
+			window.location = new_url;
+	        if(1){;
+	        } else {
+	            $('body').html('Error');
+	        }
+		});
+	});
 
     function generate_rwurl(){
     	var key = readCookie('key');

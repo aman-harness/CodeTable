@@ -41,7 +41,14 @@ button {
     background-color:transparent;
     border:0;
     border-style: solid;
-}'
+}
+
+#delete
+{	
+	/*border-radius: 25px;*/
+    background-color:transparent;
+    border:0;
+}
 
 /*#fork{
     

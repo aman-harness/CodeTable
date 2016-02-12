@@ -22,7 +22,7 @@
   	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
     	<ul class="nav navbar-nav">
 			<a href="#" class="pull-left">
-				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%; max-width:22%; max-height:100%;">
+				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%;margin-left: 4.5%; max-width:22%; max-height:100%;">
 			</a>
     	</ul>
 
@@ -45,7 +45,7 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-<!-- Introducton Insformaton -->
+<!-- Introducton Ifnormaton -->
 
 <div style="width: 95%; margin-left:45px; margin-top:-8px";>
 	<div style="float:left; width: 78%">
@@ -62,7 +62,7 @@
 
 	</div>
 
-	<div class="wrapper" style="margin-left:7%; margin-top:1%;">
+	<div class="wrapper" style="margin-left:6%; margin-top:1%;">
 		<button id = "fork">Fork Code!</button>
 	    <input type="text" disabled placeholder = "Aman" size="2" id = "fork_text"> 
 	</div>
@@ -70,6 +70,10 @@
 	<div style="float:right; width: 5%; margin-left:0%; word-wrap: break-word; margin-top:1%;">
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
+
+	<button type="button" class="btn btn-default btn-sm" id = "delete">
+		 <span class="glyphicon glyphicon-trash"></span>
+	 </button>
 
 	
 
@@ -92,7 +96,7 @@
 <div style="width: 100%;">
 	<div style="float:left; width: 75%">
 		<pre id="editor" style="float:left; width: 100%; margin-left:0%;"></pre>
-		<div id="editor-statusbar" style="margin-left:2%;"></div>
+		<div id="editor-statusbar" style="margin-left:0%;">Status Bar: </div>
 
 	</div>
 
@@ -122,7 +126,7 @@
 </div>
 <div style="clear:both"></div><br>
 
-<div style="margin-left:5%; ">
+<div style="margin-left:3.5%; ">
 <select name="lid" id="lid" ></select><br>
 
   	<h2></h2>
@@ -178,15 +182,14 @@
 
 </div>
 
-</div>
 
 
-<p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 8px;"></p>
+<p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 8px; height: 10px;"></p>
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- // -->
-<div class="container" style = "height: 50%;">
-    <div class="text-center center-block" style = "height: 50%;">
+<div class="container" style = "height: 2%;">
+    <div class="text-center center-block" style = "height: 10px;">
         <p class="txt-railway"></p>
             <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-2x social"></i></a>
             <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-2x social"></i></a>
@@ -201,3 +204,4 @@
 
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 
+<a href="https://github.com/aman-iitj/CodeTable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>

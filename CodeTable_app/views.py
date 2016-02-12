@@ -209,5 +209,11 @@ def update_name(request):
 	code.save()
 	return HttpResponse()
 
+def delete(request):
+	code_id = request.GET.get('code_id', '') 
 
-
+	code = Code.objects.get(code_id = code_id)
+	session = Session.objects.get(code_id = code_id)
+	code.delete()
+	session.delete()
+	return HttpResponse()
