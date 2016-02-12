@@ -145,5 +145,5 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 #     )
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, '../CodeTable_app/static'),
+    os.path.join(BASE_DIR, STATIC_URL),
     )
