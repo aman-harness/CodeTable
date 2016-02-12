@@ -168,6 +168,8 @@ $(document).ready(function(){
 	// On change of language when coding is not yest started.
 	$('#lid').change(function(){
 		if(codeEdited == false) changeSolutionBoxText();
+		languageSelected =  $('#lid').find('option:selected').val();
+		editor.getSession().setMode("ace/mode/" + languageSelected.toLowerCase());
 	    });
 
 	// Code related to checking any change in txt area.
@@ -233,9 +235,7 @@ $(document).ready(function(){
 
     //  Save the code.
     $("#save_button").click(function(){
-    	// var sol_box = document.getElementById('solutionBox').value;  
     	var sol_box = editor.getValue();
-    	// var x = document.getElementById("lid").value;
     	console.log("Source Code : " + sol_box);
     	data_passed = {code: sol_box, code_id: code_id};
     	console.log(data_passed);
@@ -314,7 +314,6 @@ $(document).ready(function(){
 
     $("#fork").click(function(){
     	var sol_box = editor.getValue();
-    	// var x = document.getElementById("lid").value;
     	console.log("Source Code : " + sol_box);
     	data_passed = {code: sol_box, code_id: code_id};
     	$.get('/CodeTable_app/clone/', data_passed, function(url){
@@ -359,7 +358,6 @@ $(document).ready(function(){
 
     $("#comment").hide();
     $('#itmb1').hide();
-
     $('#b1').hide();
     $('#lbl').hide();
     $('#email').hide();

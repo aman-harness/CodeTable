@@ -3,8 +3,15 @@ A web application based on djnago 1.9 to compile and run code online from Anyywh
 
 
 This project uses the HackerEarth Compile and run API for code compilation. For more details about the API, visit the link  https://www.hackerearth.com/docs/api/developers/code/v3/
+## Pre-Requisites:
 
-## Instructions to hank
+1. Python 2.7
+
+2. PIP
+
+3. virtualenv
+
+## Instructions to hack
 
 1. Clone the repository on your local machine
 
@@ -30,3 +37,6 @@ This project uses the HackerEarth Compile and run API for code compilation. For 
 
 Finally open http://127.0.0.1:8000 to see the magic into action. 
 
+## To - Do
+
+1. Implement CodeVideo
