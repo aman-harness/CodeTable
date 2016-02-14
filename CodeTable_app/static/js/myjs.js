@@ -84,20 +84,26 @@ $(document).ready(function(){
 	var StatusBar = ace.require("ace/ext/statusbar").StatusBar;
 	var statusBar = new StatusBar(editor, document.getElementById("editor-statusbar"));
 
-
+	// No need to show warning when usr is authorized.
 	$("#warning").hide();
+
+	// Last saved code updatation function
 	function update_lastSaved(text){
 		$('#last_saved').html("Last Saved : " + text);
 		return 0;
 	} 
 
+	// to remvove &ampd and other code from appearing in ace
 	var convert = function(convert){
 	    return $("<span/>", { html: convert }).text();
 	};
 
+	//  this is where I recieve all the json
 	var lang_str = document.getElementById("myVar").innerHTML;
 	var json = JSON.parse(lang_str);
 
+
+	// Parsing of all the json and recienve data
 	var code_id = json['code_id'];
 
 	var code = (json['Info']['extra'][0]);
@@ -105,20 +111,38 @@ $(document).ready(function(){
 	var run_count = json['Info']['extra'][2];
 	var user_name = json['Info']['extra'][3];
 	var clone_count = json['Info']['extra'][4];
-	console.log("Code Count -" + run_count);
+	var code_lang = json['def_lang']
 
+
+	// Populate Select language option.
+	$.each(json, function(i, value) {
+		if(i == "code_id") return true;
+		if(i == "Info") return true;
+		$('#lid').append($('<option>').text(value[0]).attr('value', i));
+		// console.log(value[0] , i)
+	    });
+
+	// This is not working. Ihave to figure i out.
+	$("#lid").val(code_lang);
+
+	console.log("Code Lang : " + code_lang);
+
+	// In case Name doesn't exists. Default in db is ""
 	if(user_name == ""){
 		$("#itm1").html("Click Here to Name the File!");
 	}
 	else $("#itm1").html(user_name);
 
+	// function to show forkcount
 	function show_forkcount(){
 		$("#fork_text").val(' ' +clone_count);
 	}
 
+	// function to show runcounnt
 	function show_runcount(){
 		$('#run_count').html("Run Count : " + run_count);
 	}
+
 	// Show Run_Count by getting it from the dtaabase.
 	show_runcount();
 	show_forkcount();
@@ -127,8 +151,7 @@ $(document).ready(function(){
 
 	// If some code comes from database.
 	if(code != ""){
-		update_lastSaved(time);
-		console.log(code);
+		update_lastSaved(time);	
 		editor.setValue(convert(code));
 		// Edit 1.1 code was already highlighted when it was loaded. Corrected it.
 		editor.clearSelection();
@@ -144,16 +167,13 @@ $(document).ready(function(){
 		document.getElementById("save_button").disabled = true;
 		document.getElementById("generate").disabled = true;
 		document.getElementById("lid").disabled = true;
+		document.getElementById("delete").disabled = true;
+		document.getElementById("generate").disabled = true;
+		document.getElementById("itm1").disabled = true;
 	}
 
 
-	// Populate Select language option.
-	$.each(json, function(i, value) {
-		if(i == "code_id") return true;
-		if(i == "Info") return true;
-		$('#lid').append($('<option>').text(value[0]).attr('value', i));
-		// console.log(value[0] , i)
-	    });
+	
 
 	// Default Code to be shown In the ace Editor
 	if(codeEdited == false)
@@ -269,7 +289,7 @@ $(document).ready(function(){
     	console.log("Input: "+ input);
     	context = {code: code, lang: lang, input: input, code_id: code_id};
     	$.get('/CodeTable_app/runCode/', context, function(text){
-			run_count = run_count + 1;
+    		run_count = run_count + 1; // In views also
 			show_runcount();
 			show_response(text);
 			JSON.stringify(text);
@@ -314,7 +334,7 @@ $(document).ready(function(){
     $("#save_button").click(function(){
     	var sol_box = editor.getValue();
     	console.log("Source Code : " + sol_box);
-    	data_passed = {code: sol_box, code_id: code_id};
+    	data_passed = {code: sol_box, code_id: code_id, lang : $("#lid").val()};
     	console.log(data_passed);
     	$.get('/CodeTable_app/saveCode/', data_passed, function(text){
     			console.log("Callback Started in saving");

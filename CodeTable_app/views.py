@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect	
-from .languages import lang
+from .languages import lang, lang_to_ext
 import requests
 import json
 import string
@@ -65,7 +65,6 @@ def clone(request):
 	allowed_key = [key]
 	session.setlist(allowed_key)
 	session.save()
-	file_url = '/CodeTable_app/' + file_name + '/'
 	return HttpResponse(file_name)
 
 def detail(request, file_id):
@@ -77,8 +76,9 @@ def detail(request, file_id):
 	user_name = code.user_name
 	clone_count = code.clone_count
 	ret = [source, last_change, run_count, user_name, clone_count]
+	def_lang = code.code_lang
 
-	print "Deatil", source, last_change
+	# print "Deatil", source, last_change, def_lang
 
 	if 'key' not in request.COOKIES:
 		# CHeck Code existence
@@ -90,7 +90,6 @@ def detail(request, file_id):
 		key = request.COOKIES['key']
 		session = Session.objects.get(code_id = file_id)
 		allowed_keys = json.loads(session.allowed_list)
-		# print "X - ", allowed_keys, key
 
 		# if key not in allowed_key.getlist():
 		if key in allowed_keys:
@@ -100,8 +99,9 @@ def detail(request, file_id):
 			# print "Unauthorize access"
 			lang['Info']['auth'] = False
 
+	# lang['def_lang'] = lang_to_ext[def_lang]
 	lang['Info']['extra'] = ret
-	# print "C, ", lang['Info']['extra']
+	lang['def_lang'] = def_lang
 	context = {'language': lang}
 
 	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(lang)})
@@ -186,11 +186,13 @@ def compileCode(request):
 def saveCode(request):
 	source = request.GET.get('code', '') 
 	code_id = request.GET.get('code_id', '') 
-	# print 'Source :- ', source, code_id
+	code_lang = request.GET.get('lang', '') 
+	print 'Source :- ', source, code_id, code_lang
 
 	code = Code.objects.get(code_id = code_id)
 	code.code_actual = source
 	code.last_edited = datetime.now()
+	code.code_lang  = code_lang
 	code.save()
 	return HttpResponse(datetime.now())
 

@@ -12,8 +12,9 @@ class Code(models.Model):
 	run_count = models.IntegerField(default = 0)
 	user_name = models.CharField(max_length=11, default = "")
 	clone_count = models.IntegerField(default = 0)
-	# def __unicode__(self):
-	# 	return self.code_id
+	code_lang = models.CharField(max_length = 15, default = "C")
+	def __unicode__(self):
+		return self.code_id
 
 class Session(models.Model):
 	code_id = models.CharField(max_length = 11)

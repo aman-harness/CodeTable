@@ -88,6 +88,7 @@ class TestClass {
 }
 """
 extra_data = []
+code_lang = "C"
 lang = {
 	"C" :			["C", default_c],
 	"CPP" :			["CPP", default_cpp],
@@ -106,5 +107,24 @@ lang = {
 	"RUST" :		["Rust (rustc 1.4.0)","X"],
 	"SCALA" :		["Scala (scalac 2.9.1)","X"],
 	"Go":			["Go (go 1.4.2)", default_go],
-	"Info" :		{"auth": 1, "code_id":	"XXXXX","extra":extra_data }
+	"Info" :		{"auth": 1, "code_id":	"XXXXX","code_lang": code_lang, "extra": extra_data }
+}
+
+lang_to_ext = {
+    "C":"c",
+    "CPP":"cpp",
+    "CSS":"css",
+    "HASKELL":"hs",
+    "JAVA":"java",
+    "JAVASCRIPT":"js",
+    "OBJECTIVEC":"m",
+    "PERL":"pl",
+    "CLOJURE":"clj",
+    "PHP":"php",
+    "PYTHON":"py",
+    "R":"r",
+    "RUBY":"rb",
+    "RUST":"rs",
+    "SCALA":"scala",
+    "CSHARP":"cs"
 }
