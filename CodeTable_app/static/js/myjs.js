@@ -1,15 +1,21 @@
-
 var codeEdited = 0;
     function show_input(){
     	console.log("asdf\name");
     	$("#comment").show();
     }
 
+function new_code(){
+	console.log("Entry Noted : ");
+	var new_url = window.location.href;
+	new_url = new_url.slice(0, -11);
+	window.location= new_url;
+}
+
 function exchange(id){
     var frmObj= document.getElementById(id);
     var toObj= document.getElementById(id+'b');
     var b1 = document.getElementById('b1');
-    toObj.style.width = frmObj.offsetWidth+7+'px'
+    toObj.style.width = frmObj.offsetWidth+7+'px';
     frmObj.style.display = 'none';
     toObj.style.display =' inline';
     // toObj.value=frmObj.innerHTML
@@ -21,6 +27,25 @@ function exchange(id){
     }
 
 
+// Function to redirect url to a new code. 
+var lang_to_ext = {
+	"C":"c",
+	"CPP":"cpp",
+	"CSS":"css",
+	"HASKELL":"hs",
+	"JAVA":"java",
+	"JAVASCRIPT":"js",
+	"OBJECTIVEC":"m",
+	"PERL":"pl",
+	"CLOJURE":"clj",
+	"PHP":"php",
+	"PYTHON":"py",
+	"R":"r",
+	"RUBY":"rb",
+	"RUST":"rs",
+	"SCALA":"scala",
+	"CSHARP":"cs"
+};
 
 $(document).ready(function(){
 
@@ -40,12 +65,17 @@ $(document).ready(function(){
 	}
 
 	var editor = ace.edit("editor");
+	ace.require("document");
+	// var doc = new Document(editor.getValue());
+
 	editor.setTheme("ace/theme/chrome");
 	editor.session.setMode("ace/mode/c_cpp");
 	editor.getSession().setTabSize(indentSpaces);
 	editorContent = editor.getValue();
 	editor.setFontSize(13);
 	editor.setOptions({
+			useWrapMode: true,
+			showPrintMargin: false,
 			enableBasicAutocompletion: true,
 			enableSnippets: true,
 			enableLiveAutocompletion: true
@@ -68,17 +98,17 @@ $(document).ready(function(){
 	var lang_str = document.getElementById("myVar").innerHTML;
 	var json = JSON.parse(lang_str);
 
-	var code_id = json['code_id']
+	var code_id = json['code_id'];
 
-	var code = (json['Info']['extra'][0])
-	var time = json['Info']['extra'][1]
-	var run_count = json['Info']['extra'][2]
-	var user_name = json['Info']['extra'][3]
-	var clone_count = json['Info']['extra'][4]
+	var code = (json['Info']['extra'][0]);
+	var time = json['Info']['extra'][1];
+	var run_count = json['Info']['extra'][2];
+	var user_name = json['Info']['extra'][3];
+	var clone_count = json['Info']['extra'][4];
 	console.log("Code Count -" + run_count);
 
 	if(user_name == ""){
-		$("#itm1").html("Unitled Name");
+		$("#itm1").html("Click Here to Name the File!");
 	}
 	else $("#itm1").html(user_name);
 
@@ -100,6 +130,8 @@ $(document).ready(function(){
 		update_lastSaved(time);
 		console.log(code);
 		editor.setValue(convert(code));
+		// Edit 1.1 code was already highlighted when it was loaded. Corrected it.
+		editor.clearSelection();
 		codeEdited = true;
 	}
 
@@ -131,6 +163,7 @@ $(document).ready(function(){
 	function changeSolutionBoxText(){
 		var curr_lang = $('#lid').find('option:selected').val();
 		editor.setValue(convert(json[curr_lang][1]));
+		editor.clearSelection();
 		return 0;
 	}
 
@@ -181,15 +214,49 @@ $(document).ready(function(){
 
 	});
 
-	editor.getSession().on('change', function() {
-	    if ($(document.activeElement).closest("div").attr("id") == "editor") {
-	        console.log("editor was changed by user typing or copy paste");
-	    } else {
-	        console.log("editor was changed programmatically");
-	    }
-	})
+	// editor.getSession().on('change', function(e) {
+	// 	console.log(e.data);
 
+	// 	editor.getSession().getDocument().applyDeltas(e);
+	//     if ($(document.activeElement).closest("div").attr("id") == "editor") {
+	//         console.log("Editor was changed by user typing or copy paste");
+	//     } else {
+	//         console.log("Editor was changed programmatically");
+	//     }
+	// })
+	var x = 0;
+	var queue = [];
+	editor.on("change", function(e) {
+	  	// if (editor.curOp && editor.curOp.command.name) console.log(e.data);
+	  	// else console.log(e.data);
+     	if(1) {
+     		console.log(e.start + x);
+     		queue.push(e);
+     		x += 1;
+      	}
+	});
+	
+    var doc = editor.getSession().getDocument();
+    $("#testing").click(function(){
+    	console.log("testing\n");
+    	// var doc = new Document(editor.getValue());
+    	editor.getSession().setValue('');  //clear
+    	// for(var currentDelta in myStoredArray) {
+    		// editor.moveCursorToPosition(delta.range.start);
+    		// while(x > 0){
+    		var xx = queue.length;
+	    	for (var i = 0; i < xx; i++) {
+	    		if(i == xx - 1) continue;
+	    	    doc.applyDeltas([queue[i]]);
+	    	    console.log(i);
+	    	    // var userInput = readline();
+	    	}
 
+    		// }
+    	// }
+    	// delta = myStoredArray[0].delta;
+    	// editor.moveCursorToPosition(delta.range.start);
+    });
 
 
 	// Code Related to running of the code.
@@ -218,19 +285,29 @@ $(document).ready(function(){
     	console.log(lang);
     	code = editor.getValue();
     	context = {code: code, lang: lang};
-    	$.get('/CodeTable_app/compileCode/', context,
-    		function(text){
-    			console.log("Callback Started in compilaion");
-    			console.log(text);
-		        if(1){
-		        	JSON.stringify(text);
-		        	console.log("Happening in compilaion\n");
-		            $("#changed").html(text['code_id']);
-		        } else {
-		            $('body').html('Error');
-		        }
+    	$.get('/CodeTable_app/compileCode/', context, function(text){
+    		console.log(text);
+    		$( "#response").show();
+    		if(text['compile_status'] == "OK"){
+				$("#logId").html("Log Id : " + text['code_id']);
+	            $("#changed").html(text['code_id']);
+	            $("#res_status").html(text['compile_status']);
+	            $("#server_response").html("Compilation Successful\n");
+	            $("#res_Ctime").html(Date());
+	            $("#res_time").html("  --  ");
+	            $("#res_memory").html("  --  ");
+	            $("#res_statusDetail").html("Seccessful");
+	        }
+	        else{
+	        	$("#logId").html("Log Id : " + text['code_id']);
+	        	$("#server_response").html(text["compile_status"]);
+	        	$("#res_status").html("  --  ");
+	        	$("#res_time").html("  --  ");
+	        	$("#res_memory").html("  --  ");
+	        	$("#res_statusDetail").html("  --  ");
+	        	$("#res_Ctime").html(Date());
+	        }
 		});
-        // $("p").hide();
     });
 
     //  Save the code.
@@ -243,10 +320,7 @@ $(document).ready(function(){
     			console.log("Callback Started in saving");
     			console.log('Time Nonw ', text);
     			update_lastSaved(text);
-		        if(1){;
-		        } else {
-		            $('body').html('Error');
-		        }
+
 		});
         // $("p").hide();
     });
@@ -260,7 +334,9 @@ $(document).ready(function(){
 
     function downloadFile(filename, text, lang) {
 
-    	var ext = 'py';
+    	// var ext = 'py';
+    	var ext = lang_to_ext[$( "#lid" ).val()];
+    	console.log("ext 	" + ext);
 
     	var element = document.createElement('a');
     	element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(text));
@@ -361,5 +437,15 @@ $(document).ready(function(){
     $('#b1').hide();
     $('#lbl').hide();
     $('#email').hide();
+
+// /////////////////// Experimients /////////////////////////////////////////////////////////////////
+
+	editor.on('change', function() {
+		this.handleEditor1Changed = function (e) {
+	    var deltas = new Array();
+	    deltas[0] = e.data;
+	    console.log("Change event : -"+ deltas + " " + e);
+		};
+	});
 
 });

@@ -1,7 +1,6 @@
 from django.shortcuts import render
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
-from . import languages
+from django.http import HttpResponse, HttpResponseRedirect	
+from .languages import lang
 import requests
 import json
 import string
@@ -21,12 +20,11 @@ CLIENT_SECRET = '9b6d81acf7b7c1d91d0dddbdbe1cb6de1c7bc7fe'
 
 def index(request):
 	N = 10
-
 	file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(N))
 	file_url = '/CodeTable_app/' + file_name + '/'
 	signer = Signer()
 	value = signer.sign(file_name)
-	print 'Result : ', value, file_name
+	# print 'Result : ', value, file_name
 
 	response = HttpResponseRedirect(file_url)
 
@@ -35,12 +33,12 @@ def index(request):
 
 	if 'key' in request.COOKIES:
 		key = request.COOKIES.get('key')
-		print 'yay'
+		# print 'yay'
 
 	else:
 		key =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
 		response.set_cookie('key', key)
-		print 'no'
+		# print 'no'
 
 	allowed_key = [key]
 	session = Session(code_id = file_name)
@@ -52,7 +50,7 @@ def index(request):
 def clone(request):
 	key = request.COOKIES.get('key')
 	source = request.GET['code']
-	print source
+	# print source
 	file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
 	
 	#Updating Code db
@@ -71,7 +69,7 @@ def clone(request):
 	return HttpResponse(file_name)
 
 def detail(request, file_id):
-	languages.lang['code_id'] = file_id
+	lang['code_id'] = file_id
 	code = Code.objects.get(code_id = file_id)
 	source = code.code_actual
 	last_change = str(code.last_edited)
@@ -84,41 +82,41 @@ def detail(request, file_id):
 
 	if 'key' not in request.COOKIES:
 		# CHeck Code existence
-		languages.lang['Info']['auth'] = False
-		languages.lang['Info']['code_id'] = file_id
-		print 'Unauthorize Access'
+		lang['Info']['auth'] = False
+		lang['Info']['code_id'] = file_id
+		# print 'Unauthorize Access'
 
 	else:
 		key = request.COOKIES['key']
 		session = Session.objects.get(code_id = file_id)
 		allowed_keys = json.loads(session.allowed_list)
-		print "X - ", allowed_keys, key
+		# print "X - ", allowed_keys, key
 
 		# if key not in allowed_key.getlist():
 		if key in allowed_keys:
-			languages.lang['Info']['auth'] = True
-			print 'Access Granted\n'
+			lang['Info']['auth'] = True
+			# print 'Access Granted\n'
 		else:
-			print "Unauthorize access"
-			languages.lang['Info']['auth'] = False
+			# print "Unauthorize access"
+			lang['Info']['auth'] = False
 
-	languages.lang['Info']['extra'] = ret
-	print "C, ", languages.lang['Info']['extra']
-	context = {'language': languages.lang}
+	lang['Info']['extra'] = ret
+	# print "C, ", lang['Info']['extra']
+	context = {'language': lang}
 
-	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(languages.lang)})
+	return render(request, 'CodeTable_app/index.html', {"obj_as_json": json.dumps(lang)})
 
 def auth(request, auth_id):
 	code_id = auth_id[0:10]
 	key = auth_id[10:]
-	print code_id, auth_id
+	# print code_id, auth_id
 	r_url = '/CodeTable_app/' + code_id + '/'
 
 	response = HttpResponseRedirect(r_url)
 
 	session = Session.objects.get(code_id = code_id)
 	allowed_keys = json.loads(session.allowed_list)
-	print "X - ", allowed_keys, key
+	# print "X - ", allowed_keys, key
 
 	# 	# if key not in allowed_key.getlist():
 	if key in allowed_keys:
@@ -133,19 +131,15 @@ def auth(request, auth_id):
 		else:
 			s_key =''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(20))
 			response.set_cookie('key', key)
-			print 'no'
+			# print 'no'
 
 		if s_key not in allowed_keys:
 			allowed_keys.append(s_key)
 			session.setlist(allowed_keys)
 			session.save()	
 	else:
-		print "Unauthorize access"
-		languages.lang['Info']['auth'] = False
-
-	# languages.lang['Info']['extra'] = ret
-	# print "C, ", languages.lang['Info']['extra']
-	# context = {'language': languages.lang}
+		# print "Unauthorize access"
+		lang['Info']['auth'] = False
 
 	return response
 
@@ -168,7 +162,7 @@ def runCode(request):
 	    'input' : inputt,
 	}
 	r = requests.post(RUN_URL, data=data)
-	print r.json()
+	# print r.json()
 	return HttpResponse(json.dumps(r.json()), content_type="application/json")
 
 def compileCode(request):
@@ -185,14 +179,14 @@ def compileCode(request):
 	}
 
 	r = requests.post(COMPILE_URL, data=data)
-	print r.json()
+	# print r.json()
 	return HttpResponse(json.dumps(r.json()), content_type="application/json")
 
 
 def saveCode(request):
 	source = request.GET.get('code', '') 
 	code_id = request.GET.get('code_id', '') 
-	print 'Source :- ', source, code_id
+	# print 'Source :- ', source, code_id
 
 	code = Code.objects.get(code_id = code_id)
 	code.code_actual = source
@@ -203,7 +197,7 @@ def saveCode(request):
 def update_name(request):
 	code_id = request.GET.get('code_id', '') 
 	user_name = request.GET.get('name', '')
-	print "Hello World \n", user_name
+	# print "Hello World \n", user_name
 	code = Code.objects.get(code_id = code_id)
 	code.user_name = user_name
 	code.save()

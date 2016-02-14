@@ -1,3 +1,4 @@
+
 <head></head>
 
 {% load staticfiles %}
@@ -10,11 +11,12 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{% static "js/myjs.js" %}"></script>
-<link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
-<script src="{% static "ace-builds/src-noconflict/ace.js" %}"></script>
+<!-- <script src="{% static "js/document.js" %}"></script> -->
+<!-- <script src="{% static "ace/document.js" %}"></script> -->
 <script src="{% static "ace-builds/src/ace.js" %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static "ace-builds/src/ext-statusbar.js" %}" type="text/javascript" charset="utf-8"></script>
-<script src="{% static "ace-builds/src/ext-language_tools.js" %}" type="text/javascript" charset="utf-8"></script>
+
+<link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
 
 
 
@@ -26,11 +28,10 @@
 			</a>
     	</ul>
 
-    	<ul class="nav navbar-nav navbar-right" style = "margin-right: 100px;">
-    	   <li><a href="http://127.0.0.1:8000/CodeTable_app/" align="right">New Code</a></li>
-    	   <li><a target="_blank" href="https://www.hackerearth.com/docs/api/developers/code/legacy/" align="right">API</a></li>
+    	<ul class="nav navbar-nav navbar-right" style = "margin-right: 110px;">
+    	   <li><a href="javascript:void(0);" onclick="new_code()" align="right" style="color:#FFFFFF;" class = "new_code">New Code </a></li>
+    	   <li><a target="_blank" href="https://www.hackerearth.com/docs/api/developers/code/legacy/" align="right"  style="color:#FFFFFF;">API</a></li>
     	 </ul>
-
   	</div>
 </nav>
 
@@ -47,7 +48,7 @@
 
 <!-- Introducton Ifnormaton -->
 
-<div style="width: 95%; margin-left:45px; margin-top:-8px";>
+<div style="width: 93%; margin-left:45px; margin-top:-8px";>
 	<div style="float:left; width: 78%">
 		<h4>Start Coding :)</h4>	
 
@@ -62,12 +63,12 @@
 
 	</div>
 
-	<div class="wrapper" style="margin-left:4%; margin-top:1%;">
+	<div class="wrapper" style="margin-left:0%; margin-top:1%;">
 		<button id = "fork">Fork Code!</button>
 	    <input type="text" disabled placeholder = "Aman" size="2" id = "fork_text"> 
 	</div>
  
-	<div style="float:right; width: 5%; margin-left:0%; word-wrap: break-word; margin-top:1%;">
+	<div style="float:right; width: 5%; margin-left:-5%; word-wrap: break-word; margin-top:1%;margin-right:50px;">
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
 
@@ -139,10 +140,11 @@
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
 
-<button id="submit_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;"> Submit </button>
+<!-- <button id="submit_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;"> Submit </button> -->
 <button id="compile_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Compile </button>
 <button id="run_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Run </button>
 <button id="save_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Save </button>
+<button id="testing" type="button" class="btn btn-primary btn-md">Testing</button>
 
 <div id = "response">	
 	<div id="compilation_log"></div>
@@ -189,17 +191,19 @@
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- // -->
 <div class="container" style = "height: 2%;">
-    <div class="text-center center-block" style = "height: 10px;">
+    <div class="text-center center-block" style = "height: 8px;">
         <p class="txt-railway"></p>
-            <a href="https://www.facebook.com/bootsnipp"><i class="fa fa-facebook-square fa-2x social"></i></a>
-            <a href="https://twitter.com/bootsnipp"><i class="fa fa-twitter-square fa-2x social"></i></a>
+            <a href="https://www.facebook.com/bewithaman"><i class="fa fa-facebook-square fa-2x social"></i></a>
+            <a href="https://twitter.com/bewithaman"><i class="fa fa-twitter-square fa-2x social"></i></a>
             <a href="https://plus.google.com/+Bootsnipp-page"><i class="fa fa-google-plus-square fa-2x social"></i></a>
-            <a href="mailto:bootsnipp@gmail.com"><i class="fa fa-envelope-square fa-2x social"></i></a>
+            <a href="mailto:ug201310004@iitj.ac.in"><i class="fa fa-envelope-square fa-2x social"></i></a>
 
-            <div class="fb-like" data-href="https://www.facebook.com/HackerEarth/?fref=ts" data-width="15" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
+            <div class="fb-like" data-href="https://www.facebook.com/pclub.iitj/?fref=ts" data-width="15" data-layout="button_count" data-action="like" data-show-faces="true" data-share="true"></div>
 	</div>
 </div>
 
 </body>
 
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
+
+<a href="https://github.com/aman-iitj/COdeTable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
