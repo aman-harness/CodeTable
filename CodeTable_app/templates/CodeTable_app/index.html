@@ -55,15 +55,16 @@
 		
 		<span id="itm1" onclick="exchange(this.id)" style = "margin-left: -17%;"></span>
 		<span class="col-xs-2">
-		<input class="replace" id="itm1b" type="text" style = "margin-left: -14%;">
+		<input class="replace" id="itm1b" type="text" style = "margin-left: -14%;" size="5" maxlength="4">
 		</span>
-		<button type="button" class="btn btn-primary btn-md" id = "b1">Save!</button> 
+		<button type="button" class="btn btn-primary btn-md" id = "b1" style="margin-left:25px; margin-top:-5px; background-color: #0B1A1F;" >Save!</button> 
 
 
 
 	</div>
 
-	<div class="wrapper" style="margin-left:0%; margin-top:1%;">
+	<div class="wrapper" style="margin-left:0%; margin-top:1%;margin-left:-1%;">
+
 		<button id = "fork">Fork Code!</button>
 	    <input type="text" disabled placeholder = "Aman" size="2" id = "fork_text"> 
 	</div>
@@ -72,7 +73,7 @@
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
 
-	<button type="button" class="btn btn-default btn-sm" id = "delete">
+	<button type="button" class="btn btn-default btn-sm" id = "delete" style="margin-top:-1.4%; margin-left:.5%;">
 		 <span class="glyphicon glyphicon-trash"></span>
 	 </button>
 
@@ -102,7 +103,18 @@
 	</div>
 
 	<div style="float:left; width: 20%; margin-left:2%; word-wrap: break-word;">
-		<h3  style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Activity Status:  </h3>
+
+
+		<h4	style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Upload file-code to editor:</h4>
+
+	<!-- 	<div class="btn btn-default btn-file">
+		    Browse <input type="file">
+		</div> -->
+
+		<input type="file" onchange="onFileSelected(event)">
+
+
+		<h3 style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Activity Status:  </h3>
 		<p id= "run_count"></p>
 		<p id ="last_saved"></p><br><br><br>	
 		<h3 style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Share URL</h3>
@@ -140,7 +152,6 @@
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
   	</form>
 
-<!-- <button id="submit_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;"> Submit </button> -->
 <button id="compile_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Compile </button>
 <button id="run_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Run </button>
 <button id="save_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Save </button>

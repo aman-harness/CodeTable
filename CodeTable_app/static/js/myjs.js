@@ -13,6 +13,7 @@ function new_code() {
     window.location = new_url;
 }
 
+
 function exchange(id) {
     var frmObj = document.getElementById(id);
     var toObj = document.getElementById(id + 'b');
@@ -104,6 +105,23 @@ $(document)
                 .html("Last Saved : " + text);
             return 0;
         }
+
+        window.onFileSelected = function(event) {
+          var selectedFile = event.target.files[0];
+          var reader = new FileReader();
+
+          var result = document.getElementById("result");
+
+          reader.onload = function(event) {
+            console.log(event.target.result);
+            editor.setValue(event.target.result);
+            editor.clearSelection();            
+          };
+          // show_forkcount();
+          reader.readAsText(selectedFile);
+
+        }
+
 
         // to remvove &ampd and other code from appearing in ace
         var convert = function (convert) {
@@ -492,6 +510,11 @@ $(document)
 
         $("#b1")
             .click(function () {
+                if( !$("#itm1b").val() ) {
+                          $("#itm1b").parents('p').addClass('warning');
+                          console.log("Error!\n");
+                    }
+                else{    
                 $("#b1")
                     .hide();
                 $("#itm1b")
@@ -515,6 +538,7 @@ $(document)
                             .html('Error');
                     }
                 });
+            }
 
             });
 
@@ -587,5 +611,7 @@ $(document)
                 console.log("Change event : -" + deltas + " " + e);
             };
         });
+
+        
 
     });
