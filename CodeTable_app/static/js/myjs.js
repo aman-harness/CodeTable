@@ -1,4 +1,12 @@
-//  Variable used to stop inserting default codes once user has edited the code 
+
+ /* ***********************************************
+  *    File Name : myjs.js file                   *
+  *    Project Name : CodeTable                   *
+  *    Written By : Aman Singh                    *
+  * ***********************************************/
+
+
+// Variable used to stop inserting default codes once user has edited the code 
 var codeEdited = false;
 
 // Useless function I think
@@ -60,6 +68,10 @@ var lang_to_ext = {
 };
 
 
+/* ***********************************************
+ *                Jquery Code                    *
+ * ***********************************************/
+
 // Invoke these js functions only after document is loaded.
 $(document)
     .ready(function () {
@@ -81,7 +93,7 @@ $(document)
         }
 
         // Setting up the ace editor
-
+        
         var editor = ace.edit("editor");
         ace.require("document");
         ace.require("ace/ext/language_tools");
@@ -131,6 +143,8 @@ $(document)
                 console.log(event.target.result);
                 editor.setValue(event.target.result);
                 editor.clearSelection();            
+
+                codeEdited = true;
             };
           reader.readAsText(selectedFile);
         }
