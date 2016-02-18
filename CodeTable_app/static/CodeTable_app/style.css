@@ -1,12 +1,6 @@
 
 body {
-    /*background-color: #F8F8F8;*/
-    /*margin-left: 5%;*/
-    /*margin-top: 2.5%;*/
-    margin-bottom: 5%;/*
-    margin-right: 5%*/
-    /*width: 100%; text-align: center;*/
-    /*background: white url("images/logo.png") no-repeat right bottom;*/
+    margin-bottom: 5%;
 }
 
 .replace {
@@ -37,7 +31,6 @@ button {
 
 #fork_text
 {	
-	/*border-radius: 25px;*/
     margin-left:10px;
     background-color:transparent;
     border:0;
@@ -46,38 +39,6 @@ button {
 
 #delete
 {	
-	/*border-radius: 25px;*/
     background-color:transparent;
     border:0;
 }
-
-/*#fork{
-    
-}'*/
-
-    .btn-file {
-        position: relative;
-        overflow: hidden;
-    }
-    .btn-file input[type=file] {
-        position: absolute;
-        top: 0;
-        right: 0;
-        min-width: 100%;
-        min-height: 100%;
-        font-size: 100px;
-        text-align: right;
-        filter: alpha(opacity=0);
-        opacity: 0;
-        outline: none;
-        background: white;
-        cursor: inherit;
-        display: block;
-    }
-
-    $(document).on('change', '.btn-file :file', function() {
-        var input = $(this),
-            numFiles = input.get(0).files ? input.get(0).files.length : 1,
-            label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-        input.trigger('fileselect', [numFiles, label]);
-    });

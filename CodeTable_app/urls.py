@@ -11,5 +11,6 @@ urlpatterns = [
     url(r'^compileCode/', views.compileCode, name='compileCode'), 
     url(r'^update_name/', views.update_name, name='update_name'),     
     url(r'^clone/', views.clone, name='clone'),   
-    url(r'^delete/', views.delete, name='delete'),       
+    url(r'^delete/', views.delete, name='delete'),    
+    # url(r'^update_codeCount/', views.update_codeCount, name='update_codeCount'),          
 ]

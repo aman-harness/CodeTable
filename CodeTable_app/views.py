@@ -50,14 +50,20 @@ def index(request):
 def clone(request):
 	key = request.COOKIES.get('key')
 	source = request.GET['code']
+	file_id = request.GET['code_id']
 	# print source
 	file_name = ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.digits) for _ in range(10))
 	
-	#Updating Code db
+	# Updating exisiting code
+	code = Code.objects.get(code_id = file_id)
+	code.clone_count = code.clone_count + 1
+	code.save()
+
+	# Making New Code DB
 	code = Code()
 	code.code_actual = source
 	code.code_id = file_name
-	code.clone_count = code.clone_count + 1
+	# code.clone_count = code.clone_count + 1
 	code.save()
 
 	#Updating Session Db
@@ -213,3 +219,9 @@ def delete(request):
 	code.delete()
 	session.delete()
 	return HttpResponse()
+
+# def update_cloneCount(request):
+# 	code_id = request.GET.get('code_id', '')
+# 	code = Code()
+# 	code.clone_count = code.clone_count + 1
+# 	code.save()

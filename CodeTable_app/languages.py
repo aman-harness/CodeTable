@@ -107,8 +107,10 @@ lang = {
 	"RUST" :		["Rust (rustc 1.4.0)","X"],
 	"SCALA" :		["Scala (scalac 2.9.1)","X"],
 	"Go":			["Go (go 1.4.2)", default_go],
+    # using this to pass context in form of json to teomplate
 	"Info" :		{"auth": 1, "code_id":	"XXXXX","code_lang": code_lang, "extra": extra_data }
 }
+
 
 lang_to_ext = {
     "C":"c",

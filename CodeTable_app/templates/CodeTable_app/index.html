@@ -1,9 +1,13 @@
-
-<head></head>
+<!DOCTYPE html>
+<head>
+	<title>CodeTable</title>
+</head>
 
 {% load staticfiles %}
 {% load static %}
 
+
+<!-- Load all the Javascript files -->
 
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,31 +15,37 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 <script src="{% static "js/myjs.js" %}"></script>
-<!-- <script src="{% static "js/document.js" %}"></script> -->
-<!-- <script src="{% static "ace/document.js" %}"></script> -->
 <script src="{% static "ace-builds/src/ace.js" %}" type="text/javascript" charset="utf-8"></script>
+<script src="{% static "ace-builds/src/ext-language_tools.js" %}" type="text/javascript" charset="utf-8"></script>
 <script src="{% static "ace-builds/src/ext-statusbar.js" %}" type="text/javascript" charset="utf-8"></script>
 
+
+<!-- Load all the css files -->
 <link rel="stylesheet" type="text/css" href="{% static 'CodeTable_app/style.css' %}" />
 
 
-
+<!-- The top navigation bar apperaing on the top of application -->
 <nav class="navbar navbar-default">
   	<div class="container-fluid" style="background-color: #0B1A1F; color: white;">
     	<ul class="nav navbar-nav">
+
+    		<!-- Code Table Logo -->
 			<a href="#" class="pull-left">
 				<img src="{% static "CodeTable_app/logo.png" %}" style = "margin-top: 1%;margin-left: 4.5%; max-width:22%; max-height:100%;">
 			</a>
     	</ul>
 
     	<ul class="nav navbar-nav navbar-right" style = "margin-right: 110px;">
+
+    		<!-- The new code and api button appearing on the right side of the bar -->
+    		<!-- Do notice the void(0).This was important since a was not allowing to chnage the href manually -->
     	   <li><a href="javascript:void(0);" onclick="new_code()" align="right" style="color:#FFFFFF;" class = "new_code">New Code </a></li>
     	   <li><a target="_blank" href="https://www.hackerearth.com/docs/api/developers/code/legacy/" align="right"  style="color:#FFFFFF;">API</a></li>
     	 </ul>
   	</div>
 </nav>
 
-<!-- Code For Adding Facebook Like Button -->
+<!-- Script For Adding Facebook Like Button -->
 <div id="fb-root"></div>
 <script>(function(d, s, id) {
   var js, fjs = d.getElementsByTagName(s)[0];
@@ -46,80 +56,100 @@
 }(document, 'script', 'facebook-jssdk'));</script>
 
 
-<!-- Introducton Ifnormaton -->
+<!-- The information bar and buttons just above the Code Editor -->
 
 <div style="width: 93%; margin-left:45px; margin-top:-8px";>
 	<div style="float:left; width: 78%">
+
+		<!-- The start coding text -->
 		<h4>Start Coding :)</h4>	
 
-		
+		<!-- We need spans since the buttons are inline -->
+		<!-- This span is for the default name that first appears on 	 -->
 		<span id="itm1" onclick="exchange(this.id)" style = "margin-left: -17%;"></span>
+		
 		<span class="col-xs-2">
-		<input class="replace" id="itm1b" type="text" style = "margin-left: -14%;" size="5" maxlength="4">
+			<!-- The textbox and submit button that appears after name of the file is replaced. -->
+			<input class="replace" id="itm1b" type="text" style = "margin-left: -14%;" size="5" maxlength="4">
 		</span>
 		<button type="button" class="btn btn-primary btn-md" id = "b1" style="margin-left:25px; margin-top:-5px; background-color: #0B1A1F;" >Save!</button> 
 
-
-
 	</div>
 
+	<!-- The buttons on the right side of the Information bar  -->
 	<div class="wrapper" style="margin-left:0%; margin-top:1%;margin-left:-1%;">
 
+		<!-- Fork Code button -->
 		<button id = "fork">Fork Code!</button>
+
+		<!-- A text box and a button need to be overlapped to show the look -->
 	    <input type="text" disabled placeholder = "Aman" size="2" id = "fork_text"> 
 	</div>
  
+ 	<!-- Download Button -->
 	<div style="float:right; width: 5%; margin-left:-5%; word-wrap: break-word; margin-top:1%;margin-right:50px;">
 		<a id="download-code" class="btn btn-sm btn-default"><span class="glyphicon glyphicon-download-alt"></span></a> 
 	</div> 
 
+	<!-- Delete Button -->
 	<button type="button" class="btn btn-default btn-sm" id = "delete" style="margin-top:-1.4%; margin-left:.5%;">
 		 <span class="glyphicon glyphicon-trash"></span>
 	 </button>
 
-	
-
 </div>
-<div style="clear:both"></div><br>
-<p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 5px;"></p>
 
-<!-- -->
+<!-- Clear the div horizontal division you have applied  -->
+<div style="clear:both"></div><br>
+
+<!-- The border you see just above code-editor -->
+<p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 5px;"></p>
 
 
 <body>
 <div style="margin-left:45px; margin-right:15px;" >
 
+
+<!-- The most criticle variable. It takes data from Python rendering and I have used it to pass data to js as JSON -->
 <p hidden id="myVar" name="variable">{{ obj_as_json }}</p>
 
+<!-- This warning is for People with unauthorized use -->
 <h3 hidden id = "warning" allign = "center"><center>Code Is Read-Only</center></h3>
 
-
-
+<!-- These divisons are to divide code editor and Right hand side buttons -->
 <div style="width: 100%;">
+	
+<!-- The Left hand side div -->
 	<div style="float:left; width: 75%">
+		
+		<!-- The Code-Editor -->
 		<pre id="editor" style="float:left; width: 100%; margin-left:0%;"></pre>
+
+		<!-- The Status Bar Div -->
 		<div id="editor-statusbar" style="margin-left:0%;">Status Bar: </div>
 
 	</div>
 
+
+	<!-- The right side division -->
 	<div style="float:left; width: 20%; margin-left:2%; word-wrap: break-word;">
 
-
+		<!-- Upload code from your local computer to code editir directly -->
 		<h4	style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Upload file-code to editor:</h4>
 
-	<!-- 	<div class="btn btn-default btn-file">
-		    Browse <input type="file">
-		</div> -->
-
+		<!-- The input button -->
 		<input type="file" onchange="onFileSelected(event)">
 
-
+		<!-- Acticity Status. Tells when the code was saved last -->
 		<h3 style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Activity Status:  </h3>
+		
+		<!-- Different Information paragraphs whose values are updated by AJAX request. -->
 		<p id= "run_count"></p>
-		<p id ="last_saved"></p><br><br><br>	
+		<p id ="last_saved"></p>
+
+		<!-- Again the border -->
 		<h3 style ="border-bottom: 1px solid #000; padding-bottom: 8px;">Share URL</h3>
 
-
+		<!-- Checkboxes to generateeditable code.	 -->
 		<form role="form">
 	  	<label class="checkbox-inline">
 	    		<input type="checkbox" id="ch1">Read Only	
@@ -129,7 +159,7 @@
 	  	</label>
 		</form>
 
-		<button type="button" class="btn btn-primary" id="generate" style="margin-left:2%; background-color: #0B1A1F;" >Generate Public URL</button>
+		<button type="button" class="btn btn-primary" id="generate" style="margin-left:5%;margin-top:4%; background-color: #0B1A1F;" >Generate Public URL</button>
 		<br>
 		<p id="p1" style="margin-left:2%;"></p><br>
 		<p id="p2" style="margin-left:2%;"></p>
@@ -139,24 +169,27 @@
 </div>
 <div style="clear:both"></div><br>
 
-<div style="margin-left:3.5%; ">
-<select name="lid" id="lid" ></select><br>
 
-  	<h2></h2>
+<!--  The language list. This is generated using data from languages.py file and js functions -->
+<div style="margin-left:3.5%; ">
+<select name="lid" id="lid" ></select><br><br>
+
   	<form role="form">
-      	<label for="comment"></label>
+      	<!-- <label for="comment"></label> -->
       	<label class="checkbox-inline">
 	    		<input type="checkbox" id="input" onclick="show_input()">Use custom input for testing your code
 	  	</label>
 
       	<textarea class="form-control" rows="3" id="comment" placeholder="Write your inputs to program.."></textarea>
-  	</form>
+  	</form><br>
 
+<!-- The various buttons appearing under the inputextearea -->
 <button id="compile_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Compile </button>
 <button id="run_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Run </button>
 <button id="save_button"  class="btn btn-primary" type="button" style = "background-color: #0B1A1F;">Save </button>
 <button id="testing" type="button" class="btn btn-primary btn-md">Testing</button>
 
+<!-- This is the hidden ouput box. -->
 <div id = "response">	
 	<div id="compilation_log"></div>
 	<div id = "output">
@@ -195,14 +228,13 @@
 
 </div>
 
-
-
+<!-- footer -->
 <p style =" width: 92.5%; margin-top:-19px; margin-left:45px; margin-right:29%; border-bottom: 1px solid #000; padding-bottom: 8px; height: 10px;"></p>
 
 <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <!-- // -->
 <div class="container" style = "height: 2%;">
-    <div class="text-center center-block" style = "height: 8px;">
+    <div class="text-center center-block" style = "height: 6px;">
         <p class="txt-railway"></p>
             <a href="https://www.facebook.com/bewithaman"><i class="fa fa-facebook-square fa-2x social"></i></a>
             <a href="https://twitter.com/bewithaman"><i class="fa fa-twitter-square fa-2x social"></i></a>
@@ -217,4 +249,5 @@
 
 <script async defer id="github-bjs" src="https://buttons.github.io/buttons.js"></script>
 
-<a href="https://github.com/aman-iitj/COdeTable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>
+<!-- Github Ribbon Appearing on the Top-Right Corner -->
+<a href="https://github.com/aman-iitj/CodeTable"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/e7bbb0521b397edbd5fe43e7f760759336b5e05f/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f677265656e5f3030373230302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_green_007200.png"></a>

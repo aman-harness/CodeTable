@@ -5,6 +5,8 @@ import json
 
 # Create your models here.
 
+
+# Model for code Database.
 class Code(models.Model):
 	code_id = models.CharField(max_length=11, primary_key=True, unique=True)
 	last_edited = models.DateTimeField(null=True)
@@ -16,6 +18,7 @@ class Code(models.Model):
 	def __unicode__(self):
 		return self.code_id
 
+# Model for Code Database
 class Session(models.Model):
 	code_id = models.CharField(max_length = 11)
 	allowed_list = models.CharField(max_length = 500)
